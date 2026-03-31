@@ -356,6 +356,37 @@
 
         let hasLoadedNube = false;
 
+        function cargarDatosNube() {
+            if (!db) return;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main');
+            onSnapshot(docRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    if (window.isAdmin && hasLoadedNube) return; 
+                    
+                    const data = snapshot.data();
+                    if (data.modulesContainer) document.getElementById('modules-container').innerHTML = data.modulesContainer;
+                    if (data.moduleList) document.getElementById('module-list').innerHTML = data.moduleList;
+                    if (data.carouselTrack) document.getElementById('carousel-track').innerHTML = data.carouselTrack;
+                    if (data.recetario) window.recetario = data.recetario;
+                    
+                    window.toggleEditables(window.isAdmin);
+                    window.renderInsumosApp();
+                    window.cambiarModulo(window.currentModuleId);
+                    
+                    clearInterval(window.intervaloCarrusel);
+                    window.slideActual = 0;
+                    window.actualizarVistaCarrusel();
+                    window.iniciarAutoSlide();
+                    
+                    hasLoadedNube = true;
+                } else {
+                    window.inicializarCarrusel();
+                    window.renderInsumosApp();
+                    hasLoadedNube = true;
+                }
+            }, (error) => console.error("Error nube:", error));
+        }
+
         // --- SISTEMA DE AUTO-GUARDADO INTELIGENTE ---
         let autoSaveTimeout = null;
         window.triggerAutoSave = function() {
@@ -613,13 +644,20 @@
         }
 
         window.copiarLink = function() {
+            let linkOficial = window.location.href;
+            
+            // Inteligencia para detectar si estás en el simulador y corregirlo
+            if (linkOficial.includes("blob:") || linkOficial.includes("usercontent.goog")) {
+                linkOficial = "https://plataforma-azucar-flores.vercel.app";
+            }
+
             const tempInput = document.createElement('input');
-            tempInput.value = window.location.href; // EXTRAE LA LIGA REAL DE TU APP
+            tempInput.value = linkOficial;
             document.body.appendChild(tempInput);
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
-            window.showToast('¡Enlace copiado al portapapeles!');
+            window.showToast('¡Enlace oficial copiado!');
         }
 
         // --- EXPORTAR E IMPORTAR (FORMATO JSON) ---
