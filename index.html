@@ -147,7 +147,6 @@
 </head>
 <body class="client-mode">
 
-    <!-- LOGIN -->
     <div id="login-view">
         <div class="login-box">
             <svg class="brand-logo-svg" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
@@ -165,12 +164,11 @@
             <p class="metal-text-gold">Acceso a la Plataforma</p>
             <input type="text" id="username" class="login-input" placeholder="Usuario (admin o cliente)">
             <input type="password" id="password" class="login-input" placeholder="Contraseña">
-            <button class="btn-metallic" onclick="iniciarSesion()">Ingresar</button>
+            <button class="btn-metallic" onclick="window.iniciarSesion()">Ingresar</button>
             <p id="login-error" style="color: #ff5252; margin-top: 1rem; display: none;">Credenciales incorrectas.</p>
         </div>
     </div>
 
-    <!-- APP LAYOUT -->
     <div id="app-layout">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -189,50 +187,46 @@
             </div>
             <div style="padding: 1.5rem 1.5rem 0.5rem; font-size: 0.8rem; color: var(--solid-gold); font-weight: bold; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between;">
                 <span>MÓDULOS <span id="save-indicator" class="admin-only" style="display:none; color:#25D366; font-size:0.7rem; margin-left:5px;">☁️ Guardado</span></span>
-                <button class="admin-block-inline" onclick="añadirModulo()" style="background:transparent; color:var(--solid-pink); border:none; cursor:pointer; font-weight:bold;">+ Nuevo</button>
+                <button class="admin-block-inline" onclick="window.añadirModulo()" style="background:transparent; color:var(--solid-pink); border:none; cursor:pointer; font-weight:bold;">+ Nuevo</button>
             </div>
             <ul class="sidebar-menu" id="module-list">
-                <li id="nav-mod-1" class="active" onclick="cambiarModulo('mod-1')">
+                <li id="nav-mod-1" class="active" onclick="window.cambiarModulo('mod-1')">
                     <span class="mod-title-edit" contenteditable="false">Inicio</span>
                 </li>
-                <!-- MÓDULO INSUMOS (SOLO ADMIN) -->
-                <li id="nav-mod-insumos" class="admin-only" style="background: rgba(197, 160, 89, 0.1); border: 1px dashed var(--solid-gold);" onclick="cambiarModulo('mod-insumos')">
+                <li id="nav-mod-insumos" class="admin-only" style="background: rgba(197, 160, 89, 0.1); border: 1px dashed var(--solid-gold);" onclick="window.cambiarModulo('mod-insumos')">
                     <span class="mod-title-edit" contenteditable="false">📋 Control de Insumos</span>
                 </li>
             </ul>
             
             <div class="sidebar-footer">
-                <button class="btn-action-solid btn-pink" onclick="copiarLink()">
+                <button class="btn-action-solid btn-pink" onclick="window.copiarLink()">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg> Copiar enlace
                 </button>
                 
-                <!-- Botón Cargar Respaldo JSON -->
-                <input type="file" id="file-respaldo" style="display:none;" accept=".json" onchange="cargarRespaldo(event)">
+                <input type="file" id="file-respaldo" style="display:none;" accept=".json" onchange="window.cargarRespaldo(event)">
                 <button class="btn-action-solid btn-dark admin-only" onclick="document.getElementById('file-respaldo').click()">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Cargar Respaldo
                 </button>
 
-                <button class="btn-action-solid btn-gold admin-only" onclick="guardarCodigo()">
+                <button class="btn-action-solid btn-gold admin-only" onclick="window.guardarCodigo()">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Guardar en PC
                 </button>
 
                 <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 0.3rem 0;"></div>
                 
-                <button class="btn-action-solid btn-dark" onclick="cerrarSesion()">
+                <button class="btn-action-solid btn-dark" onclick="window.cerrarSesion()">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Cerrar Sesión
                 </button>
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             <div class="banner-area">
                 <div class="admin-banner-controls admin-only">
-                    <button class="btn-admin-carousel" onclick="agregarBannerCarrusel()">+ Añadir Imagen</button>
-                    <button class="btn-admin-carousel del" onclick="eliminarBannerActual()">- Eliminar Actual</button>
+                    <button class="btn-admin-carousel" onclick="window.agregarBannerCarrusel()">+ Añadir Imagen</button>
+                    <button class="btn-admin-carousel del" onclick="window.eliminarBannerActual()">- Eliminar Actual</button>
                 </div>
                 <div class="carousel-track" id="carousel-track">
-                    <!-- Slide 1: LOGO ANIMADO -->
                     <div class="carousel-slide">
                         <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: var(--sidebar-bg);">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 220" style="width: 100%; max-width: 450px; height: auto;">
@@ -250,7 +244,6 @@
                             </svg>
                         </div>
                     </div>
-                    <!-- Slide 2 -->
                     <div class="carousel-slide">
                         <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Zanahoria">
                         <div class="slide-overlay">
@@ -258,7 +251,6 @@
                             <p contenteditable="false">Bizcocho suave con trozos de nuez, relleno y cubierto con cremoso betún de queso crema.</p>
                         </div>
                     </div>
-                    <!-- Slide 3 -->
                     <div class="carousel-slide">
                         <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Chocolate">
                         <div class="slide-overlay">
@@ -267,31 +259,29 @@
                         </div>
                     </div>
                 </div>
-                <button class="carousel-btn prev-btn" onclick="moverCarrusel(-1)">&#10094;</button>
-                <button class="carousel-btn next-btn" onclick="moverCarrusel(1)">&#10095;</button>
+                <button class="carousel-btn prev-btn" onclick="window.moverCarrusel(-1)">&#10094;</button>
+                <button class="carousel-btn next-btn" onclick="window.moverCarrusel(1)">&#10095;</button>
                 <div class="carousel-dots" id="carousel-dots"></div>
             </div>
 
             <div class="workspace">
                 <div class="editor-toolbar admin-only">
                     <span class="metal-text-pink">Herramientas:</span>
-                    <button class="btn-tool" onclick="agregarBloque('texto')">📝 Texto</button>
-                    <button class="btn-tool" onclick="agregarBloque('imagen')">🖼️ Imagen</button>
-                    <button class="btn-tool" onclick="agregarBloque('video')">🎥 Video</button>
-                    <button class="btn-tool" style="border-color: var(--solid-pink); color: var(--solid-pink);" onclick="agregarBloque('whatsapp')">💬 Producto + WhatsApp</button>
+                    <button class="btn-tool" onclick="window.agregarBloque('texto')">📝 Texto</button>
+                    <button class="btn-tool" onclick="window.agregarBloque('imagen')">🖼️ Imagen</button>
+                    <button class="btn-tool" onclick="window.agregarBloque('video')">🎥 Video</button>
+                    <button class="btn-tool" style="border-color: var(--solid-pink); color: var(--solid-pink);" onclick="window.agregarBloque('whatsapp')">💬 Producto + WhatsApp</button>
                 </div>
 
                 <div id="modules-container">
                     
-                    <!-- MODULO 1: INICIO -->
                     <div id="mod-1" class="module-content-view" style="display: block;">
                         <h1 class="module-main-title metal-text-pink" contenteditable="false">Bienvenido a la Experiencia Azúcar Flores</h1>
                         <div class="blocks-wrapper">
-                            <!-- BLOQUE CON MARCO ELEGANTE -->
                             <div class="content-block text-block">
                                 <div class="block-controls admin-only">
-                                    <button class="btn-block-ctrl" onclick="moverBloque(this, -1)" title="Subir">⬆️</button>
-                                    <button class="btn-block-ctrl" onclick="moverBloque(this, 1)" title="Bajar">⬇️</button>
+                                    <button class="btn-block-ctrl" onclick="window.moverBloque(this, -1)" title="Subir">⬆️</button>
+                                    <button class="btn-block-ctrl" onclick="window.moverBloque(this, 1)" title="Bajar">⬇️</button>
                                     <button class="btn-block-ctrl btn-delete" onclick="this.parentElement.parentElement.remove(); window.triggerAutoSave();">Eliminar</button>
                                 </div>
                                 <div class="text-content playfair metal-text-gold" contenteditable="false" style="font-size: 1.4rem; line-height: 1.8; font-style: italic;">
@@ -302,7 +292,6 @@
                         </div>
                     </div>
 
-                    <!-- NUEVO MODULO: INSUMOS Y RECETAS (SOLO ADMIN) -->
                     <div id="mod-insumos" class="module-content-view">
                         <h1 class="module-main-title metal-text-pink">Control de Insumos y Recetas</h1>
                         <p class="metal-text-gold" style="font-size: 1.2rem; margin-bottom: 2rem;">Calculadora automática para tu lista de compras.</p>
@@ -311,7 +300,7 @@
                             <h2>1. Registro de Pedidos Semanales</h2>
                             <p style="margin-bottom: 1rem; color: #666;">Anota cuántos pasteles tienes agendados para calcular los ingredientes necesarios.</p>
                             <div id="lista-ventas-container"></div>
-                            <button class="btn-metallic" style="margin-top: 1.5rem;" onclick="calcularListaCompras()">🛒 Generar Lista de Compras</button>
+                            <button class="btn-metallic" style="margin-top: 1.5rem;" onclick="window.calcularListaCompras()">🛒 Generar Lista de Compras</button>
                         </div>
 
                         <div class="insumos-panel" id="panel-compras" style="display: none; border-color: var(--solid-gold); border-width: 2px;">
@@ -325,7 +314,7 @@
 
                         <div class="insumos-panel" style="background: #FAFAFA;">
                             <h2>2. Administrar Recetas (Tus Fórmulas)</h2>
-                            <button class="btn-small" style="margin-bottom: 1.5rem;" onclick="crearNuevaReceta()">+ Agregar Nuevo Pastel/Receta</button>
+                            <button class="btn-small" style="margin-bottom: 1.5rem;" onclick="window.crearNuevaReceta()">+ Agregar Nuevo Pastel/Receta</button>
                             <div id="lista-recetas-container"></div>
                         </div>
                     </div>
@@ -337,7 +326,6 @@
 
     <div id="toast-msg"></div>
 
-    <!-- Firebase y Lógica Web App -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -366,62 +354,7 @@
             }
         ];
 
-        // --- CONEXIÓN FIREBASE (NUBE) ---
         let hasLoadedNube = false;
-
-        async function initFirebase() {
-            try {
-                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-                appId = typeof __app_id !== 'undefined' ? __app_id : 'azucar-flores-app';
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    if (user) cargarDatosNube();
-                });
-            } catch (e) {
-                console.warn("Ejecutando en modo local (sin nube).");
-                window.inicializarCarrusel();
-            }
-        }
-        initFirebase();
-
-        function cargarDatosNube() {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main');
-            onSnapshot(docRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    if (window.isAdmin && hasLoadedNube) return; 
-                    
-                    const data = snapshot.data();
-                    if (data.modulesContainer) document.getElementById('modules-container').innerHTML = data.modulesContainer;
-                    if (data.moduleList) document.getElementById('module-list').innerHTML = data.moduleList;
-                    if (data.carouselTrack) document.getElementById('carousel-track').innerHTML = data.carouselTrack;
-                    if (data.recetario) window.recetario = data.recetario;
-                    
-                    window.toggleEditables(window.isAdmin);
-                    window.renderInsumosApp();
-                    window.cambiarModulo(window.currentModuleId);
-                    
-                    clearInterval(window.intervaloCarrusel);
-                    window.slideActual = 0;
-                    window.actualizarVistaCarrusel();
-                    window.iniciarAutoSlide();
-                    
-                    hasLoadedNube = true;
-                } else {
-                    window.inicializarCarrusel();
-                    window.renderInsumosApp();
-                    hasLoadedNube = true;
-                }
-            }, (error) => console.error("Error nube:", error));
-        }
 
         // --- SISTEMA DE AUTO-GUARDADO INTELIGENTE ---
         let autoSaveTimeout = null;
@@ -437,6 +370,7 @@
         };
 
         window.guardarEnNubeSilencioso = async function() {
+            if (!db) return; // Evita error si no hay base de datos conectada
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main');
             const dataToSave = {
                 modulesContainer: document.getElementById('modules-container').innerHTML,
@@ -600,7 +534,7 @@
             const li = document.createElement('li');
             li.id = 'nav-' + newId;
             li.onclick = () => window.cambiarModulo(newId);
-            li.innerHTML = `<span class="mod-title-edit" contenteditable="true" onclick="event.stopPropagation()">Nuevo Módulo</span><button class="admin-only btn-block-ctrl btn-delete" style="background:transparent;" onclick="eliminarModulo('${newId}', event)">❌</button>`;
+            li.innerHTML = `<span class="mod-title-edit" contenteditable="true" onclick="event.stopPropagation()">Nuevo Módulo</span><button class="admin-only btn-block-ctrl btn-delete" style="background:transparent;" onclick="window.eliminarModulo('${newId}', event)">❌</button>`;
             ul.insertBefore(li, document.getElementById('nav-mod-insumos'));
 
             const container = document.getElementById('modules-container');
@@ -619,4 +553,226 @@
         window.eliminarModulo = function(id, event) {
             event.stopPropagation();
             if(confirm('¿Estás seguro de eliminar este módulo completo?')) {
-                document.getElementById('nav-' + id
+                document.getElementById('nav-' + id).remove();
+                document.getElementById(id).remove();
+                const firstAvailable = document.querySelector('.sidebar-menu li');
+                if(firstAvailable) firstAvailable.click();
+                window.triggerAutoSave();
+            }
+        }
+
+        window.moverBloque = function(btn, direccion) {
+            const block = btn.closest('.content-block');
+            const wrapper = block.parentElement;
+            if (direccion === -1 && block.previousElementSibling) wrapper.insertBefore(block, block.previousElementSibling);
+            else if (direccion === 1 && block.nextElementSibling) wrapper.insertBefore(block.nextElementSibling, block);
+            window.triggerAutoSave();
+        }
+
+        window.agregarBloque = function(tipo) {
+            const activeWrapper = document.querySelector(`#${window.currentModuleId} .blocks-wrapper`);
+            if (!activeWrapper) return;
+
+            const block = document.createElement('div');
+            block.className = 'content-block';
+            let innerHTML = `<div class="block-controls admin-only"><button class="btn-block-ctrl" onclick="window.moverBloque(this, -1)" title="Subir">⬆️</button><button class="btn-block-ctrl" onclick="window.moverBloque(this, 1)" title="Bajar">⬇️</button><button class="btn-block-ctrl btn-delete" onclick="this.parentElement.parentElement.remove(); window.triggerAutoSave();">Eliminar</button></div>`;
+
+            if (tipo === 'texto') {
+                block.classList.add('text-block');
+                innerHTML += `<div class="text-content" contenteditable="true">Escribe tu texto o descripción detallada aquí...</div>`;
+            } else if (tipo === 'imagen') {
+                const url = prompt("Pega la URL de la imagen que deseas agregar:");
+                if (!url) return;
+                block.classList.add('img-block');
+                innerHTML += `<div class="img-wrapper"><img src="${url}" alt="Imagen de Catálogo"></div>`;
+            } else if (tipo === 'video') {
+                const url = prompt("Pega la URL de YouTube (Debe ser enlace de Embed):");
+                if (!url) return;
+                block.classList.add('vid-block');
+                innerHTML += `<div class="video-wrapper"><iframe src="${url}" frameborder="0" allowfullscreen></iframe></div>`;
+            } else if (tipo === 'whatsapp') {
+                block.classList.add('wa-product-block');
+                innerHTML += `<div class="wa-prod-name metal-text-pink" contenteditable="true">Nombre del Pastel</div>
+                              <div class="wa-prod-desc" contenteditable="true">Bizcocho artesanal preparado con ingredientes premium...</div>
+                              <div class="wa-prod-price metal-text-gold" contenteditable="true">$490.00</div>
+                              <div class="wa-btn-container"><button class="btn-metallic" onclick="window.pedirWhatsApp(this)">Pedir por WhatsApp</button></div>`;
+            }
+            block.innerHTML = innerHTML;
+            activeWrapper.appendChild(block);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            window.triggerAutoSave();
+        }
+
+        window.pedirWhatsApp = function(btnElement) {
+            const block = btnElement.closest('.wa-product-block');
+            const nombre = block.querySelector('.wa-prod-name').innerText.trim();
+            const precio = block.querySelector('.wa-prod-price').innerText.trim();
+            const numeroEmpresa = "5213311414110"; 
+            const mensaje = `¡Hola Azúcar Flores! 🌸\n\nMe interesa pedir desde el Catálogo Premium:\n\n🎂 *Producto:* ${nombre}\n💰 *Precio:* ${precio} pesos\n📍 *Entrega en:* Zapopan\n\n¿Tienen disponibilidad?`;
+            window.open(`https://wa.me/${numeroEmpresa}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+
+        window.copiarLink = function() {
+            const tempInput = document.createElement('input');
+            tempInput.value = window.location.href; // EXTRAE LA LIGA REAL DE TU APP
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            window.showToast('¡Enlace copiado al portapapeles!');
+        }
+
+        // --- EXPORTAR E IMPORTAR (FORMATO JSON) ---
+        window.guardarCodigo = function() {
+            const dataToSave = {
+                modulesContainer: document.getElementById('modules-container').innerHTML,
+                moduleList: document.getElementById('module-list').innerHTML,
+                carouselTrack: document.getElementById('carousel-track').innerHTML,
+                recetario: window.recetario
+            };
+            const jsonString = JSON.stringify(dataToSave, null, 2);
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "AzucarFlores_Respaldo.json";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            window.showToast('¡Respaldo JSON descargado en tu PC!');
+        }
+
+        window.cargarRespaldo = function(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.modulesContainer) document.getElementById('modules-container').innerHTML = data.modulesContainer;
+                    if (data.moduleList) document.getElementById('module-list').innerHTML = data.moduleList;
+                    if (data.carouselTrack) document.getElementById('carousel-track').innerHTML = data.carouselTrack;
+                    if (data.recetario) window.recetario = data.recetario;
+                    
+                    window.toggleEditables(window.isAdmin);
+                    window.renderInsumosApp();
+                    window.cambiarModulo(window.currentModuleId);
+                    clearInterval(window.intervaloCarrusel);
+                    window.slideActual = 0;
+                    window.actualizarVistaCarrusel();
+                    window.iniciarAutoSlide();
+
+                    window.showToast('¡Respaldo JSON cargado correctamente!');
+                    window.triggerAutoSave();
+                } catch(error) {
+                    alert('Error: El archivo seleccionado no parece ser un respaldo válido.');
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        };
+
+        // --- INSUMOS ---
+        window.renderInsumosApp = function() { window.renderRegistroVentas(); window.renderGestionRecetas(); }
+        window.renderRegistroVentas = function() {
+            const container = document.getElementById('lista-ventas-container');
+            container.innerHTML = '';
+            window.recetario.forEach(receta => {
+                container.innerHTML += `<div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 1rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 0.5rem;"><span style="font-family: 'Playfair Display'; font-size: 1.2rem; font-weight: bold; color: var(--text-dark);">🎂 ${receta.nombre}</span><div><span style="margin-right: 10px; color: #888;">Cantidad pedida:</span><input type="number" min="0" value="${receta.pedidos}" class="input-inline" style="width: 80px; text-align: center;" onchange="window.actualizarPedido(${receta.id}, this.value)"></div></div>`;
+            });
+        }
+        window.actualizarPedido = function(id, cantidad) {
+            const receta = window.recetario.find(r => r.id === id);
+            if (receta) { receta.pedidos = parseInt(cantidad) || 0; window.triggerAutoSave(); }
+        }
+        window.renderGestionRecetas = function() {
+            const container = document.getElementById('lista-recetas-container');
+            container.innerHTML = '';
+            window.recetario.forEach(receta => {
+                let htmlIngredientes = '';
+                receta.ingredientes.forEach((ing, index) => {
+                    htmlIngredientes += `<li><span style="color: var(--text-dark);">${ing.nombre}</span><span style="color: var(--text-dark);"><strong>${ing.cantidad}</strong> ${ing.unidad} <button class="btn-small" style="padding: 2px 6px; color: #ff5252; background: transparent;" onclick="window.eliminarIngrediente(${receta.id}, ${index})">❌</button></span></li>`;
+                });
+                container.innerHTML += `<div class="recipe-card"><h3>${receta.nombre}</h3><ul class="ingredient-list">${htmlIngredientes}</ul><div style="display: flex; gap: 10px; margin-top: 10px;"><input type="text" id="ing-nombre-${receta.id}" class="input-inline" style="flex-grow: 1;" placeholder="Ej. Azúcar"><input type="number" id="ing-cant-${receta.id}" class="input-inline" style="width: 80px;" placeholder="Cant."><input type="text" id="ing-uni-${receta.id}" class="input-inline" style="width: 70px;" placeholder="gr, ml, pza"><button class="btn-small" onclick="window.agregarIngrediente(${receta.id})">+ Añadir Insumo</button></div></div>`;
+            });
+        }
+        window.crearNuevaReceta = function() {
+            const nombre = prompt("Nombre del nuevo pastel o postre:");
+            if (nombre) {
+                window.recetario.push({ id: Date.now(), nombre: nombre, pedidos: 0, ingredientes: [] });
+                window.renderInsumosApp();
+                window.showToast("Receta creada. Agrega sus ingredientes.");
+                window.triggerAutoSave();
+            }
+        }
+        window.agregarIngrediente = function(recetaId) {
+            const nombre = document.getElementById(`ing-nombre-${recetaId}`).value;
+            const cantidad = parseFloat(document.getElementById(`ing-cant-${recetaId}`).value);
+            const unidad = document.getElementById(`ing-uni-${recetaId}`).value;
+            if (nombre && cantidad && unidad) {
+                const receta = window.recetario.find(r => r.id === recetaId);
+                receta.ingredientes.push({ nombre, cantidad, unidad });
+                window.renderGestionRecetas();
+                window.triggerAutoSave();
+            } else { alert("Llena todos los campos del ingrediente."); }
+        }
+        window.eliminarIngrediente = function(recetaId, indexIngrediente) {
+            const receta = window.recetario.find(r => r.id === recetaId);
+            receta.ingredientes.splice(indexIngrediente, 1);
+            window.renderGestionRecetas();
+            window.triggerAutoSave();
+        }
+        window.calcularListaCompras = function() {
+            const listaGlobal = {};
+            window.recetario.forEach(receta => {
+                if (receta.pedidos > 0) {
+                    receta.ingredientes.forEach(ing => {
+                        const key = `${ing.nombre.toLowerCase()}_${ing.unidad.toLowerCase()}`;
+                        if (!listaGlobal[key]) listaGlobal[key] = { nombre: ing.nombre, cantidad: 0, unidad: ing.unidad };
+                        listaGlobal[key].cantidad += (ing.cantidad * receta.pedidos);
+                    });
+                }
+            });
+            const tbody = document.querySelector('#tabla-compras tbody');
+            tbody.innerHTML = '';
+            let hayCompras = false;
+            for (let key in listaGlobal) {
+                hayCompras = true;
+                const item = listaGlobal[key];
+                tbody.innerHTML += `<tr><td style="font-weight: bold;">${item.nombre}</td><td style="color: var(--solid-pink); font-size: 1.1rem; font-weight: bold;">${item.cantidad} ${item.unidad}</td></tr>`;
+            }
+            if (!hayCompras) tbody.innerHTML = `<tr><td colspan="2" style="text-align:center; color: #888;">No tienes pedidos registrados.</td></tr>`;
+            document.getElementById('panel-compras').style.display = 'block';
+            window.showToast("¡Lista de compras generada con éxito!");
+            document.getElementById('panel-compras').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // AL FINAL: Inicializar Firebase y decidir qué cargar
+        async function initFirebase() {
+            try {
+                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'azucar-flores-app';
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) cargarDatosNube();
+                });
+            } catch (e) {
+                console.warn("Ejecutando en modo local (sin nube). Firebase no está configurado aún.");
+                hasLoadedNube = true;
+            }
+        }
+
+        initFirebase();
+    </script>
+</body>
+</html>
