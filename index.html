@@ -4,185 +4,249 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-    <title>Azúcar Flores | Plataforma Premium</title>
+    <title>Azúcar Flores | Pastelería Boutique</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
         :root {
-            --bg-main: #FDFBF7;
-            --sidebar-bg: #1A1817;
-            --solid-gold: #C5A059;
-            --solid-pink: #C8819E;
+            --bg-crema: #FDFBF7;
+            --chocolate: #1A1817;
+            --oro: #C5A059;
+            --rosa: #C8819E;
             --metal-gold: linear-gradient(135deg, #A67C00 0%, #F5D061 25%, #C5A059 50%, #FDF6CE 75%, #8B6914 100%);
             --metal-pink: linear-gradient(135deg, #A65879 0%, #EAAFC8 25%, #C8819E 50%, #F8DAE5 75%, #8A405D 100%);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Lato', sans-serif; }
-        body { background-color: var(--bg-main); color: #2A2522; overflow-x: hidden; }
+        body { background-color: var(--bg-crema); color: #2A2522; overflow-x: hidden; }
         h1, h2, h3, .playfair { font-family: 'Playfair Display', serif; letter-spacing: 0.5px; }
 
-        .metal-text-gold { background: var(--metal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: var(--solid-gold); }
-        .metal-text-pink { background: var(--metal-pink); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: var(--solid-pink); }
+        .metal-text-gold { background: var(--metal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: var(--oro); }
+        .metal-text-pink { background: var(--metal-pink); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: var(--rosa); }
 
-        /* Sidebar Styling */
-        #module-list li {
-            padding: 0.85rem 1.2rem; cursor: pointer; color: #E8E0DD; font-size: 0.95rem; font-weight: 600;
-            display: flex; justify-content: space-between; align-items: center; border-radius: 0.75rem;
-            margin-bottom: 0.5rem; transition: all 0.3s ease; border: 1px solid transparent;
+        /* ==================================================================
+           BOTÓN UNIVERSAL (Acciones principales: Compartir, Backups)
+           ================================================================== */
+        .btn-universal {
+            width: 100%; padding: 0.8rem 1rem; cursor: pointer; color: #111 !important; 
+            border-radius: 1rem; border: none; outline: none;
+            background: var(--metal-pink); margin-bottom: 0.6rem;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.8rem; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 1.5px; transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(200, 129, 158, 0.2);
         }
-        #module-list li:hover { background-color: #2B2624; color: #fff; }
-        #module-list li.active { background: var(--metal-pink); color: #111; box-shadow: 0 4px 15px rgba(200, 129, 158, 0.4); border-color: transparent; }
+        .btn-universal:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(200, 129, 158, 0.35); }
+        .btn-universal:active { background: var(--metal-gold); box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3); }
 
-        .mod-title-edit { flex-grow: 1; outline: none; background-color: transparent !important; color: inherit; padding: 2px 5px; border-radius: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* ==================================================================
+           BOTÓN MODULAR REDUCIDO (Secciones del Índice - Mitad de tamaño)
+           ================================================================== */
+        .btn-module {
+            width: 100%; padding: 0.4rem 0.8rem; cursor: pointer; color: #111 !important; 
+            border-radius: 0.6rem; border: none; outline: none;
+            background: var(--metal-pink); margin-bottom: 0.4rem;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.6rem; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 1px; transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(200, 129, 158, 0.2);
+        }
+        .btn-module:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(200, 129, 158, 0.35); }
+        .btn-module.active, .btn-module:active { background: var(--metal-gold); box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3); }
+        .btn-module .btn-delete-mod { color: #8A405D; font-size: 0.8rem; background: rgba(255,255,255,0.3); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-module .btn-delete-mod:hover { background: #8A405D; color: white; transform: scale(1.1); }
 
-        /* Bloques de Contenido */
+        /* Cinta de Banner Reducida */
+        .banner-area { position: relative; width: 100%; height: 160px; background-color: var(--bg-crema); border-bottom: 4px solid var(--oro); overflow: hidden; }
+        @media(min-width: 768px) { .banner-area { height: 200px; } }
+        .carousel-track { display: flex; height: 100%; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .carousel-slide { min-width: 100%; height: 100%; position: relative; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .slide-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; background: linear-gradient(to right, rgba(26,24,23,0.85), rgba(26,24,23,0.3)); }
+
+        /* Bloques de Contenido Premium */
         .content-block { 
-            position: relative; border-radius: 24px; transition: 0.3s; background: #FFFFFF;
-            border: 1px solid rgba(197, 160, 89, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.04);
-            margin-bottom: 2rem; overflow: hidden;
+            position: relative; border-radius: 30px; transition: 0.4s; background: #FFFFFF;
+            border: 1px solid rgba(197, 160, 89, 0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            margin-bottom: 2.5rem; overflow: hidden;
         }
-        .block-controls { position: absolute; top: 15px; right: 15px; background: var(--sidebar-bg); border: 1px solid var(--solid-gold); border-radius: 10px; padding: 6px; display: none; gap: 6px; z-index: 30; }
-        
-        /* Botón WhatsApp Reforzado */
+        .content-block::after {
+            content: ""; position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 1px dashed rgba(197, 160, 89, 0.2); border-radius: 20px; pointer-events: none;
+        }
+
         .btn-wa-premium { 
             width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important;
-            padding: 1.2rem !important; color: #111 !important; border: none !important; border-radius: 14px !important;
-            font-size: 1.1rem !important; font-weight: 900 !important; cursor: pointer !important; transition: all 0.3s !important;
-            background: var(--metal-pink) !important; box-shadow: 0 8px 25px rgba(200, 129, 158, 0.4) !important;
-            text-decoration: none !important; text-transform: uppercase; letter-spacing: 1px;
+            padding: 1.2rem !important; color: #111 !important; border: none !important; border-radius: 18px !important;
+            font-size: 1rem !important; font-weight: 900 !important; cursor: pointer !important; transition: 0.3s !important;
+            background: var(--metal-pink) !important; box-shadow: 0 10px 25px rgba(200, 129, 158, 0.4) !important;
+            text-decoration: none !important; text-transform: uppercase; letter-spacing: 2px;
         }
-        .btn-wa-premium:hover { background: var(--metal-gold) !important; transform: translateY(-3px) !important; }
+        .btn-wa-premium:hover { background: var(--metal-gold) !important; transform: translateY(-4px) !important; box-shadow: 0 15px 35px rgba(197, 160, 89, 0.5) !important; }
 
-        /* Carrusel */
-        .banner-area { position: relative; width: 100%; height: 260px; background-color: var(--sidebar-bg); border-bottom: 4px solid var(--solid-gold); border-image: var(--metal-gold) 1; overflow: hidden; }
-        @media(min-width: 768px) { .banner-area { height: 420px; } }
-        .carousel-track { display: flex; height: 100%; transition: transform 0.7s cubic-bezier(0.2, 1, 0.3, 1); }
-        .carousel-slide { min-width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; }
-        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-        .slide-overlay { position: absolute; bottom: 25px; left: 15px; right: 15px; background: rgba(26, 24, 23, 0.88); padding: 1.2rem; border-radius: 18px; border-left: 6px solid var(--solid-pink); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
-        @media(min-width: 768px) { .slide-overlay { bottom: 50px; left: 60px; max-width: 600px; padding: 2rem; } }
+        /* Insumos UI */
+        .table-insumos { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+        .table-insumos th { border-bottom: 2px solid var(--oro); padding: 0.8rem; color: var(--oro); text-align: left; font-size: 0.75rem; text-transform: uppercase; }
+        .table-insumos td { padding: 0.8rem; border-bottom: 1px solid #f8f8f8; }
+        .input-insumo { background: transparent; border: none; border-bottom: 1px solid #eee; padding: 4px; outline: none; width: 100%; font-size: 0.9rem; transition: 0.3s;}
+        .input-insumo:focus { border-color: var(--rosa); background: rgba(200, 129, 158, 0.05); }
 
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 1px solid var(--solid-gold); cursor: pointer; transition: 0.3s; }
-        .dot.active { background: var(--metal-pink); transform: scale(1.4); border-color: transparent; }
+        /* Animación de 3 Velas */
+        @keyframes flicker { 0% { opacity: 0.8; transform: scale(1) rotate(-1deg); } 50% { opacity: 1; transform: scale(1.1) rotate(1deg); } 100% { opacity: 0.9; transform: scale(0.95) rotate(-2deg); } }
+        .flame { animation: flicker 1.2s infinite alternate; transform-origin: center bottom; }
 
-        .brand-logo-svg { width: 100%; max-width: 240px; filter: drop-shadow(0px 6px 8px rgba(0,0,0,0.5)); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 10px; }
         
-        body.admin-mode .admin-only { display: flex !important; }
-        body.admin-mode .content-block:hover .block-controls { display: flex; }
+        /* Sistema Maestro de Admin */
+        body.admin-mode-active .admin-only { display: flex !important; }
         .admin-only { display: none !important; }
 
-        #toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--sidebar-bg); color: #fff; padding: 12px 25px; border-radius: 50px; font-weight: bold; border: 1px solid var(--solid-gold); z-index: 1000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #C5A059; border-radius: 10px; }
-
-        /* Estilo Insumos */
-        .insumos-panel { background: #FFFFFF; border-radius: 16px; border: 1px solid rgba(197, 160, 89, 0.2); padding: 1.5rem; margin-bottom: 1.5rem; }
-        .recipe-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; }
-        .input-inline { padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px; width: 100px; outline: none; }
+        #toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--chocolate); color: #fff; padding: 15px 30px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; border: 1px solid var(--oro); z-index: 1000; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .mod-title-edit { outline: none; background: transparent; color: inherit; flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     </style>
 </head>
 <body class="client-mode notranslate">
 
-    <!-- LOGIN POR PIN -->
-    <div id="login-view" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900 px-4">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#C8819E]/15 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#C5A059]/15 rounded-full blur-3xl"></div>
+    <!-- LOGIN BOUTIQUE -->
+    <div id="login-view" class="fixed inset-0 w-full h-screen z-[100] flex items-center justify-center bg-[#0C0B0A] px-4 overflow-hidden">
+        <!-- Destellos sutiles de fondo -->
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#C8819E]/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#C5A059]/10 rounded-full blur-[120px]"></div>
         
-        <div class="bg-[#1A1817] p-8 sm:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-sm text-center relative z-10 border border-white/10">
-            <div class="absolute top-0 left-0 right-0 h-2 rounded-t-[2.5rem]" style="background: var(--metal-pink);"></div>
+        <div class="bg-[#161413] p-8 sm:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-sm text-center relative z-10 border border-[#C5A059]/10">
+            <!-- Línea superior metálica (Rosa a Oro) -->
+            <div class="absolute top-0 left-10 right-10 h-1.5 rounded-b-xl" style="background: var(--metal-pink);"></div>
             
-            <svg class="brand-logo-svg mx-auto mb-8" viewBox="0 0 250 100">
-                <defs>
-                    <linearGradient id="lPink" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A65879" /><stop offset="50%" stop-color="#C8819E" /><stop offset="100%" stop-color="#8A405D" /></linearGradient>
-                    <linearGradient id="lGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A67C00" /><stop offset="50%" stop-color="#C5A059" /><stop offset="100%" stop-color="#8B6914" /></linearGradient>
-                </defs>
-                <text x="50%" y="42" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="44" fill="url(#lPink)" letter-spacing="1">AZÚCAR</text>
-                <text x="50%" y="90" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="46" fill="transparent" stroke="url(#lGold)" stroke-width="1.8" letter-spacing="3">FLORES</text>
-            </svg>
+            <!-- Logo SVG Central Animado -->
+            <div class="mx-auto w-44 h-auto mb-6 mt-4">
+                <svg viewBox="0 0 350 220" class="w-full h-auto drop-shadow-xl">
+                    <defs>
+                        <linearGradient id="gP" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A65879"/><stop offset="50%" stop-color="#C8819E"/><stop offset="100%" stop-color="#8A405D"/></linearGradient>
+                        <linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A67C00"/><stop offset="50%" stop-color="#C5A059"/><stop offset="100%" stop-color="#8B6914"/></linearGradient>
+                        <linearGradient id="gF" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FDF6CE"/><stop offset="50%" stop-color="#F5D061"/><stop offset="100%" stop-color="#D84315"/></linearGradient>
+                    </defs>
+                    <g transform="translate(100, 20)"><rect x="0" y="25" width="5" height="30" fill="#E8E0DD" rx="2" /><path class="flame" d="M 2.5 0 Q 7 10 2.5 20 Q -2 10 2.5 0 Z" fill="url(#gF)"/></g>
+                    <g transform="translate(172, 5)"><rect x="0" y="25" width="6" height="40" fill="#E8E0DD" rx="2" /><path class="flame" d="M 3 0 Q 8 10 3 20 Q -2 10 3 0 Z" fill="url(#gF)"/></g>
+                    <g transform="translate(245, 20)"><rect x="0" y="25" width="5" height="30" fill="#E8E0DD" rx="2" /><path class="flame" d="M 2.5 0 Q 7 10 2.5 20 Q -2 10 2.5 0 Z" fill="url(#gF)"/></g>
+                    <text x="50%" y="130" text-anchor="middle" font-family="serif" font-weight="900" font-size="65" fill="url(#gP)">AZÚCAR</text>
+                    <text x="50%" y="190" text-anchor="middle" font-family="serif" font-weight="900" font-size="52" fill="transparent" stroke="url(#gG)" stroke-width="2">FLORES</text>
+                </svg>
+            </div>
             
-            <h2 class="text-white text-2xl font-black mb-2 italic">Bienvenido</h2>
-            <p class="text-slate-400 text-sm mb-10 font-medium">Ingresa tu PIN para ver el catálogo</p>
+            <h2 class="text-3xl font-black text-[#FDFBF7] mb-2 tracking-tight playfair italic">Pastelería Boutique</h2>
+            <p class="text-slate-400 text-xs mb-2 font-medium px-4">Ingresa tu código de acceso para visualizar el contenido.</p>
+            <p class="text-[#C8819E] text-[10px] mb-8 font-bold px-4">(Admin: admin123 | Cliente: cliente123)</p>
             
-            <input type="password" id="pin-input" class="w-full p-5 bg-[#110F0E] border border-white/10 rounded-2xl mb-6 focus:ring-4 focus:ring-[#C5A059]/30 outline-none text-white font-bold text-center tracking-[0.6em] text-2xl shadow-inner transition-all" placeholder="••••">
+            <div class="border border-[#C5A059]/20 rounded-2xl mb-6 bg-[#0C0B0A] shadow-inner p-1">
+                <input type="password" id="pin-input" class="w-full p-4 bg-transparent outline-none font-bold text-center tracking-[0.5em] text-xl text-[#FDFBF7] placeholder:text-white/10" placeholder="••••••••" onkeydown="if(event.key==='Enter') window.validarAcceso()" autoFocus>
+            </div>
             
-            <button class="btn-wa-premium !shadow-xl transform hover:scale-[1.03] active:scale-95 transition-all mb-4" onclick="window.validarAcceso()">Entrar al Sistema</button>
+            <p id="login-error" class="text-red-500 text-xs font-bold text-center mb-4 hidden">Código incorrecto. Verifica e intenta de nuevo.</p>
             
-            <p id="login-error" class="text-red-400 text-xs font-bold mt-2 hidden animate-pulse">PIN incorrecto.</p>
-            <p class="text-slate-500 text-[10px] mt-10 uppercase tracking-[0.3em] font-black">Repostería Artesanal Boutique</p>
+            <button class="w-full bg-[#110F0E] hover:bg-[#1A1817] text-slate-300 hover:text-[var(--oro)] border border-white/5 font-black py-4 rounded-2xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-95 mt-2 uppercase tracking-[3px] text-xs" onclick="window.validarAcceso()">Acceder al Sistema</button>
         </div>
     </div>
 
     <!-- APP LAYOUT -->
     <div id="app-layout" class="hidden h-screen w-full flex overflow-hidden relative bg-[#FDFBF7]">
         
-        <div id="mobile-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden backdrop-blur-sm" onclick="window.toggleSidebar(false)"></div>
+        <div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden lg:hidden backdrop-blur-sm" onclick="window.toggleSidebar(false)"></div>
 
-        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-[var(--sidebar-bg)] flex flex-col shadow-2xl transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 border-r border-black/50">
-            <div class="h-24 flex items-center justify-center bg-[#110F0E] border-b border-white/5 shrink-0 px-8">
-                <svg class="w-full max-h-12" viewBox="0 0 250 100">
-                    <text x="50%" y="42" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="44" fill="url(#lPink)">AZÚCAR</text>
-                    <text x="50%" y="90" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="46" fill="transparent" stroke="url(#lGold)" stroke-width="1.8">FLORES</text>
+        <!-- Sidebar Chocolate -->
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-[260px] flex flex-col shadow-2xl transform transition-transform duration-500 ease-in-out -translate-x-full lg:translate-x-0" style="background-color: var(--chocolate);">
+            <!-- Logo Animado con 3 Velas -->
+            <div class="h-40 flex items-center justify-center bg-[#0C0B0A] border-b border-[var(--oro)]/20 shrink-0 px-6">
+                <svg viewBox="0 0 350 220" class="w-full h-auto drop-shadow-xl mt-4 scale-110">
+                    <defs>
+                        <linearGradient id="gP2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A65879"/><stop offset="50%" stop-color="#C8819E"/><stop offset="100%" stop-color="#8A405D"/></linearGradient>
+                        <linearGradient id="gG2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A67C00"/><stop offset="50%" stop-color="#C5A059"/><stop offset="100%" stop-color="#8B6914"/></linearGradient>
+                        <linearGradient id="gF2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FDF6CE"/><stop offset="50%" stop-color="#F5D061"/><stop offset="100%" stop-color="#D84315"/></linearGradient>
+                    </defs>
+                    
+                    <g transform="translate(100, 20)"><rect x="0" y="25" width="5" height="30" fill="#E8E0DD" rx="2" /><path class="flame" d="M 2.5 0 Q 7 10 2.5 20 Q -2 10 2.5 0 Z" fill="url(#gF2)"/></g>
+                    <g transform="translate(172, 5)"><rect x="0" y="25" width="6" height="40" fill="#E8E0DD" rx="2" /><path class="flame" d="M 3 0 Q 8 10 3 20 Q -2 10 3 0 Z" fill="url(#gF2)"/></g>
+                    <g transform="translate(245, 20)"><rect x="0" y="25" width="5" height="30" fill="#E8E0DD" rx="2" /><path class="flame" d="M 2.5 0 Q 7 10 2.5 20 Q -2 10 2.5 0 Z" fill="url(#gF2)"/></g>
+
+                    <text x="50%" y="130" text-anchor="middle" font-family="serif" font-weight="900" font-size="65" fill="url(#gP2)">AZÚCAR</text>
+                    <text x="50%" y="190" text-anchor="middle" font-family="serif" font-weight="900" font-size="52" fill="transparent" stroke="url(#gG2)" stroke-width="2">FLORES</text>
                 </svg>
             </div>
 
             <div class="flex-1 overflow-y-auto p-5 custom-scrollbar">
-                <div class="px-2 mb-6 text-[10px] font-black text-[var(--solid-gold)] uppercase tracking-[0.25em] flex justify-between items-center">
-                    <span>SECCIONES</span>
-                    <button class="admin-block-inline text-[var(--solid-pink)] text-2xl font-bold p-1" onclick="window.añadirModulo()">+</button>
+                <div class="px-2 mb-4 text-[9px] font-black text-[var(--oro)] uppercase tracking-[4px] flex justify-between items-center opacity-80">
+                    <span>Índice Modular</span>
+                    <button class="admin-only text-[var(--rosa)] text-3xl font-light hover:scale-125 transition-all leading-none" onclick="window.añadirModulo()">+</button>
                 </div>
                 <ul id="module-list"></ul>
             </div>
 
-            <div class="p-6 bg-[#110F0E] border-t border-white/5 space-y-3">
-                <button onclick="window.copiarLink()" class="w-full py-4 bg-[var(--metal-pink)] text-[#111] rounded-2xl text-sm font-black shadow-lg flex items-center justify-center gap-2 transform active:scale-95 transition-all">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg> Compartir
+            <div class="p-5 bg-[#0C0B0A] border-t border-[var(--oro)]/20">
+                <button class="btn-universal" onclick="window.copiarLink()">
+                    <span>🔗 Copiar Enlace</span>
                 </button>
-                <button onclick="window.cerrarSesion()" class="w-full py-3 text-slate-500 hover:text-white text-xs font-black uppercase tracking-widest transition-colors">Salir del sistema</button>
+                
+                <div class="admin-only flex-col w-full gap-1">
+                    <input type="file" id="file-respaldo" style="display:none;" accept=".json" onchange="window.cargarRespaldo(event)">
+                    <button class="btn-universal" onclick="document.getElementById('file-respaldo').click()">
+                        <span>☁️ Cargar Backup</span>
+                    </button>
+                    <button class="btn-universal" onclick="window.guardarCodigo()">
+                        <span>💾 Guardar JSON</span>
+                    </button>
+                </div>
+                
+                <button onclick="window.cerrarSesion()" class="w-full py-3 text-slate-500 hover:text-white text-[9px] font-black uppercase tracking-widest transition-colors italic text-center mt-1">Cerrar Sesión</button>
             </div>
         </aside>
 
+        <!-- Main Area -->
         <main class="flex-1 flex flex-col h-full overflow-hidden">
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center px-4 sm:px-10 justify-between shrink-0 shadow-sm z-30">
-                <div class="flex items-center gap-4">
-                    <button class="lg:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-2xl border border-slate-100 shadow-sm" onclick="window.toggleSidebar(true)">
-                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            
+            <header class="h-20 bg-white border-b border-slate-200 flex items-center px-4 sm:px-12 justify-between shrink-0 shadow-sm z-30">
+                <div class="flex items-center gap-6">
+                    <button class="lg:hidden p-3 text-[var(--oro)] bg-slate-50 rounded-2xl border border-slate-100 shadow-sm" onclick="window.toggleSidebar(true)">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
                     </button>
-                    <div class="hidden sm:flex items-center text-[10px] font-black text-slate-400 bg-slate-50 px-5 py-2.5 rounded-full border border-slate-100 uppercase tracking-[0.2em] shadow-inner">
-                        <span class="text-[var(--solid-gold)]">AZÚCAR FLORES</span>
-                        <span class="mx-3 opacity-30">/</span>
-                        <span id="breadcrumb-active" class="text-[var(--solid-pink)] truncate max-w-[180px]">Catálogo</span>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="hidden sm:flex items-center text-[10px] font-black text-slate-500 bg-slate-50 px-6 py-3 rounded-full border border-slate-200 uppercase tracking-[0.3em]">
+                            <span id="breadcrumb-active" class="text-[var(--rosa)]">INICIO</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <div id="cloud-indicator" class="admin-only hidden items-center gap-1.5 text-[10px] font-black text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100 shadow-sm">
-                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> NUBE ACTIVA
+                <div class="flex items-center gap-5">
+                    <div id="cloud-indicator" class="admin-only items-center gap-2 text-[9px] font-black text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100 shadow-sm">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span> NUBE
                     </div>
-                    <button id="btn-admin-view" class="admin-only hidden bg-amber-100 text-amber-700 border-2 border-amber-200 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm hover:bg-amber-200 transition-all" onclick="window.toggleAdminView()">Ver Resultado</button>
+                    <button id="btn-admin-view" class="admin-only bg-[var(--oro)] text-white border-2 border-[var(--oro)] px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[3px] shadow-lg hover:brightness-110 transition-all" onclick="window.toggleAdminView()">Ver Resultado</button>
                 </div>
             </header>
 
             <div class="flex-1 overflow-y-auto custom-scrollbar" id="main-scroll-area">
+                
+                <!-- Cinta de Banner Reducida -->
                 <div class="banner-area relative" id="carousel-section">
-                    <div class="admin-only hidden absolute top-5 right-5 z-20 gap-2">
-                        <button class="bg-black/80 text-white px-4 py-2 rounded-full text-[10px] font-black border border-white/20 shadow-2xl" onclick="window.agregarBannerCarrusel()">+ AÑADIR FOTO</button>
-                        <button class="bg-red-600/90 text-white px-4 py-2 rounded-full text-[10px] font-black shadow-2xl" onclick="window.eliminarBannerActual()">BORRAR</button>
+                    <div class="admin-only absolute top-4 right-4 z-20 gap-3">
+                        <button class="bg-white/90 backdrop-blur text-slate-800 px-4 py-1.5 rounded-full text-[9px] font-black shadow-lg hover:bg-white" onclick="window.agregarBannerCarrusel()">+ FOTO BANNER</button>
+                        <button class="bg-red-600/90 text-white px-4 py-1.5 rounded-full text-[9px] font-black shadow-lg hover:bg-red-700" onclick="window.eliminarBannerActual()">ELIMINAR</button>
                     </div>
-                    <div class="carousel-track" id="carousel-track"></div>
-                    <button class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 text-white rounded-full text-xl flex items-center justify-center" onclick="window.moverCarrusel(-1)">❮</button>
-                    <button class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 text-white rounded-full text-xl flex items-center justify-center" onclick="window.moverCarrusel(1)">❯</button>
-                    <div class="carousel-dots absolute bottom-4 w-full flex justify-center gap-2" id="carousel-dots"></div>
+                    <div class="carousel-track h-full" id="carousel-track"></div>
+                    <div class="carousel-dots absolute bottom-3 w-full flex justify-center gap-2" id="carousel-dots"></div>
                 </div>
 
-                <div class="p-5 sm:p-12 max-w-5xl mx-auto w-full pb-40">
-                    <div class="admin-only hidden bg-white p-6 rounded-[2rem] border-2 border-[var(--solid-pink)]/20 shadow-2xl mb-12 flex-wrap items-center gap-4 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 bottom-0 w-2.5 bg-gradient-to-b from-[var(--solid-pink)] to-[var(--solid-gold)]"></div>
-                        <span class="metal-text-pink font-black text-xs uppercase tracking-[0.3em] mr-4 pl-4 italic">Constructor:</span>
-                        <button class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black hover:bg-slate-100 transition-all uppercase tracking-widest shadow-sm" onclick="window.agregarBloque('texto')">📝 Párrafo</button>
-                        <button class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black hover:bg-slate-100 transition-all uppercase tracking-widest shadow-sm" onclick="window.agregarBloque('imagen')">🖼️ Foto</button>
-                        <button class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black hover:bg-slate-100 transition-all uppercase tracking-widest shadow-sm" onclick="window.agregarBloque('video')">🎥 Video</button>
-                        <button class="px-6 py-3 bg-[var(--metal-gold)] text-[#111] rounded-2xl text-[10px] font-black shadow-xl hover:scale-105 active:scale-95 transition-all uppercase tracking-widest" onclick="window.agregarBloque('whatsapp')">🍰 Bloque de Venta</button>
+                <div class="p-8 sm:p-16 max-w-6xl mx-auto w-full pb-60">
+                    
+                    <!-- Constructor Premium Toolbar -->
+                    <div class="admin-only bg-white p-8 rounded-[3rem] border border-[var(--oro)]/30 shadow-xl mb-16 flex-wrap items-center justify-center gap-4 sm:gap-6 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 bottom-0 w-3 bg-gradient-to-b from-[var(--rosa)] to-[var(--oro)] opacity-50"></div>
+                        <span class="text-[var(--rosa)] font-black text-[11px] uppercase tracking-[6px] italic w-full text-center mb-2">Constructor de Módulo</span>
+                        <button class="px-6 py-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black hover:bg-slate-100 transition-all shadow-sm" onclick="window.agregarBloque('texto')">📝 Añadir Párrafo</button>
+                        <button class="px-6 py-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black hover:bg-slate-100 transition-all shadow-sm" onclick="window.agregarBloque('imagen')">🖼️ Añadir Foto</button>
+                        <button class="px-6 py-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black hover:bg-slate-100 transition-all shadow-sm" onclick="window.agregarBloque('video')">🎥 Añadir Video</button>
+                        <button class="px-8 py-4 bg-[var(--metal-gold)] text-black rounded-2xl text-[11px] font-black shadow-lg hover:scale-105 active:scale-95 transition-all uppercase tracking-[2px]" onclick="window.agregarBloque('whatsapp')">🍰 Añadir Bloque de Venta</button>
                     </div>
 
                     <div id="modules-container"></div>
@@ -204,260 +268,407 @@
         let db, auth, appId;
         window.isAdmin = false;
         window.isViewingAsClient = false;
-        window.currentModuleId = 'mod-1774969517377';
+        window.currentModuleId = 'mod-bienvenida';
         window.slideActual = 0;
         window.intervaloCarrusel = null;
 
-        // --- TUS DATOS CARGADOS DESDE EL RESPALDO (9 PASTELES) ---
+        // --- SISTEMA DE PRODUCCIÓN DINÁMICO ---
+        window.pasteleriaRecetas = [
+            { id: 1, nombre: "Pastel de Zanahoria Clásico", ingredientes: [{n: "Zanahoria Rallada", q: "450gr"}, {n: "Harina de Trigo", q: "300gr"}, {n: "Queso Crema", q: "380gr"}, {n: "Nuez Picada", q: "100gr"}, {n: "Huevos", q: "4 pzas"}] }
+        ];
+
+        // --- DATOS RECUPERADOS Y ESTRUCTURADOS ---
         const initialBackup = {
             "modulesContainer": `
-                <div id="mod-1" class="module-content-view" style="display: none;">
-                    <h1 class="module-main-title metal-text-pink text-4xl font-black mb-8" contenteditable="true">Bienvenido a Azúcar Flores</h1>
+                <div id="mod-bienvenida" class="module-content-view">
+                    <h1 class="module-main-title metal-text-pink text-5xl font-black mb-10 text-center italic" contenteditable="true" onblur="window.triggerAutoSave()">Bienvenido a la Experiencia Azúcar Flores</h1>
                     <div class="blocks-wrapper">
-                        <div class="content-block p-10"><div class="text-content playfair text-2xl italic leading-relaxed text-slate-600" contenteditable="true">En Azúcar Flores transformamos ingredientes premium en obras de arte comestibles. Somos una repostería artesanal tipo boutique en Zapopan, dedicada a la frescura y calidad total.</div></div>
-                    </div>
-                </div>
-                <div id="mod-insumos" class="module-content-view" style="display: none;">
-                    <h1 class="module-main-title metal-text-pink text-3xl font-black mb-6">Panel de Insumos</h1>
-                    <div id="lista-ventas-container"></div>
-                    <button class="btn-wa-premium !w-auto mt-6" onclick="window.calcularListaCompras()">🛒 Calcular Compras</button>
-                </div>
-                <div id="mod-1774969517377" class="module-content-view">
-                    <h1 class="module-main-title metal-text-pink" contenteditable="true">Catálogo Premium</h1>
-                    <div class="blocks-wrapper">
-                        <div class="content-block p-8"><div class="text-content" contenteditable="true">Explora nuestra selección de repostería fina. Cada pedido es horneado especialmente para ti.</div></div>
-                        <!-- Pastel 1 -->
-                        <div class="content-block"><img src="https://i.ibb.co/NdrvzzWT/pagina-1.png" class="w-full h-auto"></div>
-                        <div class="content-block p-8 wa-product-block">
-                            <h2 class="wa-prod-name metal-text-pink text-3xl font-black mb-2" contenteditable="true">Pastel de Zanahoria</h2>
-                            <p class="wa-prod-desc text-slate-500 mb-6" contenteditable="true">Bizcocho suave con trozos de nuez, relleno y cubierto con cremoso betún de queso crema. 10-12 Rebanadas.</p>
-                            <div class="flex items-center justify-between gap-4">
-                                <span class="wa-prod-price text-2xl font-black metal-text-gold" contenteditable="true">$490.00</span>
-                                <button class="btn-wa-premium flex-1" onclick="window.pedirWhatsApp(this)">Pedir por WhatsApp</button>
-                            </div>
-                        </div>
-                        <!-- Pastel 2 -->
-                        <div class="content-block"><img src="https://i.ibb.co/tp0Njg3Z/pagina-2-1.png" class="w-full h-auto"></div>
-                        <div class="content-block p-8 wa-product-block">
-                            <h2 class="wa-prod-name metal-text-pink text-3xl font-black mb-2" contenteditable="true">Pastel de Chocolate</h2>
-                            <p class="wa-prod-desc text-slate-500 mb-6" contenteditable="true">Bizcocho de chocolate húmedo relleno y cubierto con cremoso ganache de chocolate intenso. 10-12 Rebanadas.</p>
-                            <div class="flex items-center justify-between gap-4">
-                                <span class="wa-prod-price text-2xl font-black metal-text-gold" contenteditable="true">$480.00</span>
-                                <button class="btn-wa-premium flex-1" onclick="window.pedirWhatsApp(this)">Pedir por WhatsApp</button>
-                            </div>
-                        </div>
-                        <!-- Pastel 3 -->
-                        <div class="content-block"><img src="https://i.ibb.co/d00Bsbq4/pagina-4.png" class="w-full h-auto"></div>
-                        <div class="content-block p-8 wa-product-block">
-                            <h2 class="wa-prod-name metal-text-pink text-3xl font-black mb-2" contenteditable="true">Brownie Especial</h2>
-                            <p class="wa-prod-desc text-slate-500 mb-6" contenteditable="true">Base de brownie con nuez, corona de dulce de leche y crema ligera de queso con fresas frescas.</p>
-                            <div class="flex items-center justify-between gap-4">
-                                <span class="wa-prod-price text-2xl font-black metal-text-gold" contenteditable="true">$490.00</span>
-                                <button class="btn-wa-premium flex-1" onclick="window.pedirWhatsApp(this)">Pedir por WhatsApp</button>
-                            </div>
-                        </div>
-                        <!-- Pastel 4 -->
-                        <div class="content-block"><img src="https://i.ibb.co/V0nMvT7r/pagina-6.png" class="w-full h-auto"></div>
-                        <div class="content-block p-8 wa-product-block">
-                            <h2 class="wa-prod-name metal-text-pink text-3xl font-black mb-2" contenteditable="true">Pastel Dulce de Leche</h2>
-                            <p class="wa-prod-desc text-slate-500 mb-6" contenteditable="true">Bizcocho de vainilla con toque de tres leches, relleno de dulce de leche y decorado con obleas.</p>
-                            <div class="flex items-center justify-between gap-4">
-                                <span class="wa-prod-price text-2xl font-black metal-text-gold" contenteditable="true">$480.00</span>
-                                <button class="btn-wa-premium flex-1" onclick="window.pedirWhatsApp(this)">Pedir por WhatsApp</button>
+                        <div class="content-block p-14 text-center">
+                            <div class="text-content playfair text-2xl leading-relaxed text-slate-600" contenteditable="true" onblur="window.triggerAutoSave()">
+                                En Azúcar Flores creemos que cada celebración merece un toque de dulzura excepcional. Somos una repostería artesanal tipo boutique ubicada en Zapopan, Jalisco, dedicada a transformar recetas clásicas en verdaderas obras de arte comestibles.<br><br>
+                                Para garantizar la máxima frescura, calidad y atención al detalle en cada bocado, operamos bajo una producción exclusiva y 100% artesanal. Aquí no encontrarás pasteles de línea de producción masiva; cada creación es horneada sobre pedido con el tiempo, cuidado y dedicación que tu evento merece. Explora nuestro catálogo y descubre el verdadero sabor de lo auténtico.
                             </div>
                         </div>
                     </div>
+                </div>
+                <div id="mod-insumos" class="module-content-view" style="display:none;">
+                    <h1 class="metal-text-pink text-5xl font-black mb-12 text-center italic">Reportes y Producción</h1>
+                    <div class="blocks-wrapper">
+                        <div class="content-block p-12 bg-white">
+                            <h2 class="metal-text-gold text-2xl font-black mb-10 uppercase text-center tracking-[3px]">Resumen Mensual</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-4 text-center">
+                                <div class="bg-slate-50 border border-slate-200 p-8 rounded-[2rem]"><p class="text-[10px] font-black opacity-50 mb-3 uppercase tracking-widest">Ingresos</p><p class="text-3xl font-black metal-text-pink">$15,800.00</p></div>
+                                <div class="bg-slate-50 border border-slate-200 p-8 rounded-[2rem]"><p class="text-[10px] font-black opacity-50 mb-3 uppercase tracking-widest">Pedidos</p><p class="text-3xl font-black metal-text-pink">34</p></div>
+                                <div class="bg-slate-50 border border-slate-200 p-8 rounded-[2rem]"><p class="text-[10px] font-black opacity-50 mb-3 uppercase tracking-widest">Top Ventas</p><p class="text-2xl font-black metal-text-gold">Zanahoria</p></div>
+                            </div>
+                        </div>
+                        <div class="content-block p-12 bg-white">
+                            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-12">
+                                <h2 class="metal-text-gold text-2xl font-black uppercase tracking-widest">Control de Recetas</h2>
+                                <button class="px-8 py-3 bg-[var(--metal-pink)] text-black rounded-xl text-[10px] font-black uppercase shadow-lg hover:scale-105 transition-all" onclick="window.exportarExcel()">📥 Exportar a Excel</button>
+                            </div>
+                            <div id="plantilla-insumos-render" class="space-y-12"></div>
+                            <button class="w-full py-5 border-2 border-dashed border-[var(--oro)] rounded-3xl text-[11px] font-black text-[var(--oro)] uppercase mt-10 hover:bg-[var(--oro)] hover:text-white transition-all admin-only" onclick="window.añadirReceta()">+ Añadir Nuevo Pastel para Producción</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="mod-catalogo" class="module-content-view" style="display:none;">
+                    <h1 class="module-main-title metal-text-pink text-5xl font-black mb-12 text-center italic" contenteditable="true" onblur="window.triggerAutoSave()">Catálogo Premium</h1>
+                    <div class="blocks-wrapper">
+                        <div class="content-block p-14 text-center">
+                            <div class="text-content playfair text-xl leading-relaxed text-slate-600" contenteditable="true" onblur="window.triggerAutoSave()">En Proyecto Azúcar Flores, cada creación es el resultado de una combinación precisa entre técnica, calidad y pasión por la repostería. Nuestro catálogo no es solo una selección de postres; es una experiencia diseñada para quienes valoran los detalles, el sabor auténtico y la presentación elegante.</div>
+                        </div>
+                        <div class="content-block"><img src="https://i.ibb.co/NdrvzzWT/pagina-1.png" class="w-full"></div>
+                        <div class="content-block p-14 text-center wa-product-block">
+                            <div class="admin-only absolute top-4 right-4 z-20 hidden gap-2"><button class="bg-black/20 p-2 rounded text-white hover:bg-black/40" onclick="window.moverB(this,-1)">⬆️</button><button class="bg-black/20 p-2 rounded text-white hover:bg-black/40" onclick="window.moverB(this, 1)">⬇️</button><button class="bg-red-500 text-white p-2 rounded" onclick="this.closest('.content-block').remove(); window.triggerAutoSave();">❌</button></div>
+                            <h2 class="wa-prod-name metal-text-pink text-4xl font-black mb-4" contenteditable="true" onblur="window.triggerAutoSave()">Pastel de Zanahoria</h2>
+                            <p class="wa-prod-desc text-slate-500 italic text-lg mb-8" contenteditable="true" onblur="window.triggerAutoSave()">Bizcocho suave de zanahoria con trozos de nuez y betún de queso crema. 10-12 Rebanadas.</p>
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 relative">
+                                <span class="wa-prod-price text-4xl font-black metal-text-gold" contenteditable="true" onblur="window.triggerAutoSave()">$490.00</span>
+                                <button class="btn-wa-premium sm:!w-auto sm:px-16" data-wa="5213311414110" onclick="window.pedirWA(this)">Pedir por WhatsApp</button>
+                                <button class="admin-only absolute -bottom-8 text-[10px] font-bold text-slate-400 hover:text-[var(--rosa)] transition-colors" onclick="window.editarWA(this)">✏️ Editar Número WA</button>
+                            </div>
+                        </div>
+                        <div class="content-block"><img src="https://i.ibb.co/tp0Njg3Z/pagina-2-1.png" class="w-full"></div>
+                        <div class="content-block p-14 text-center wa-product-block">
+                            <div class="admin-only absolute top-4 right-4 z-20 hidden gap-2"><button class="bg-black/20 p-2 rounded text-white hover:bg-black/40" onclick="window.moverB(this,-1)">⬆️</button><button class="bg-black/20 p-2 rounded text-white hover:bg-black/40" onclick="window.moverB(this, 1)">⬇️</button><button class="bg-red-500 text-white p-2 rounded" onclick="this.closest('.content-block').remove(); window.triggerAutoSave();">❌</button></div>
+                            <h2 class="wa-prod-name metal-text-pink text-4xl font-black mb-4" contenteditable="true" onblur="window.triggerAutoSave()">Chocolate Intenso</h2>
+                            <p class="wa-prod-desc text-slate-500 italic text-lg mb-8" contenteditable="true" onblur="window.triggerAutoSave()">Esponjoso relleno y cubierto de ganache de cacao 70%. 10-12 Rebanadas.</p>
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 relative">
+                                <span class="wa-prod-price text-4xl font-black metal-text-gold" contenteditable="true" onblur="window.triggerAutoSave()">$480.00</span>
+                                <button class="btn-wa-premium sm:!w-auto sm:px-16" data-wa="5213311414110" onclick="window.pedirWA(this)">Pedir por WhatsApp</button>
+                                <button class="admin-only absolute -bottom-8 text-[10px] font-bold text-slate-400 hover:text-[var(--rosa)] transition-colors" onclick="window.editarWA(this)">✏️ Editar Número WA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `,
             "moduleList": `
-                <li id="nav-mod-1" onclick="window.cambiarModulo('mod-1')"><span class="mod-title-edit">Bienvenida</span></li>
-                <li id="nav-mod-1774969517377" class="active" onclick="window.cambiarModulo('mod-1774969517377')"><span class="mod-title-edit">Catálogo</span></li>
-                <li id="nav-mod-insumos" class="admin-only hidden" onclick="window.cambiarModulo('mod-insumos')"><span class="mod-title-edit">📋 Insumos</span></li>
+                <li id="nav-mod-bienvenida" class="btn-module active" onclick="window.cambiarModulo('mod-bienvenida')"><span class="mod-title-edit" contenteditable="true" onblur="window.triggerAutoSave()">Bienvenida</span><button class="admin-only btn-delete-mod" onclick="window.eliminarModulo('mod-bienvenida', event)">×</button></li>
+                <li id="nav-mod-catalogo" class="btn-module" onclick="window.cambiarModulo('mod-catalogo')"><span class="mod-title-edit" contenteditable="true" onblur="window.triggerAutoSave()">Catálogo Premium</span><button class="admin-only btn-delete-mod" onclick="window.eliminarModulo('mod-catalogo', event)">×</button></li>
+                <li id="nav-mod-insumos" class="btn-module admin-only" onclick="window.cambiarModulo('mod-insumos')"><span class="mod-title-edit" contenteditable="true" onblur="window.triggerAutoSave()">Insumos y Reportes</span></li>
             `,
             "carouselTrack": `
-                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200"><div class="slide-overlay"><h2 class="playfair metal-text-gold text-2xl">Artesanía Boutique</h2><p>Pasteles horneados únicamente sobre pedido para garantizar frescura.</p></div></div>
-                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=1200"><div class="slide-overlay"><h2 class="playfair metal-text-gold text-2xl">Sabores Reales</h2><p>Ingredientes premium seleccionados minuciosamente.</p></div></div>
+                <div class="carousel-slide min-w-full h-full relative flex items-center justify-center">
+                    <input type="text" class="admin-only absolute top-4 left-4 w-1/2 p-3 z-30 text-black text-sm rounded-xl border-2 border-[var(--oro)] shadow-lg" placeholder="Pega URL de imagen..." onchange="this.nextElementSibling.src=this.value; window.triggerAutoSave();">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200" class="w-full h-full object-cover opacity-60">
+                    <div class="slide-overlay"><h2 class="playfair metal-text-gold text-4xl mb-2" contenteditable="true" onblur="window.triggerAutoSave()">Calidad Boutique</h2><p class="text-slate-100 font-bold text-lg" contenteditable="true" onblur="window.triggerAutoSave()">Hecho a mano en Zapopan.</p></div>
+                </div>
+                <div class="carousel-slide min-w-full h-full relative flex items-center justify-center">
+                    <input type="text" class="admin-only absolute top-4 left-4 w-1/2 p-3 z-30 text-black text-sm rounded-xl border-2 border-[var(--oro)] shadow-lg" placeholder="Pega URL de imagen..." onchange="this.nextElementSibling.src=this.value; window.triggerAutoSave();">
+                    <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200" class="w-full h-full object-cover opacity-60">
+                    <div class="slide-overlay"><h2 class="playfair metal-text-gold text-4xl mb-2" contenteditable="true" onblur="window.triggerAutoSave()">Ingredientes Premium</h2><p class="text-slate-100 font-bold text-lg" contenteditable="true" onblur="window.triggerAutoSave()">El sabor auténtico de la repostería.</p></div>
+                </div>
             `
         };
 
+        // --- FUNCIONES DE PRODUCCIÓN E INSUMOS ---
+        window.renderPlantillaInsumos = function() {
+            const container = document.getElementById('plantilla-insumos-render');
+            if(!container) return;
+            container.innerHTML = "";
+            window.pasteleriaRecetas.forEach(receta => {
+                let rows = "";
+                receta.ingredientes.forEach((ing, idx) => {
+                    rows += `<tr class="hover:bg-slate-50 transition-colors">
+                        <td><input type="text" class="input-insumo font-bold" value="${ing.n}" onchange="window.updateIng(${receta.id}, ${idx}, 'n', this.value)"></td>
+                        <td class="text-right"><input type="text" class="input-insumo text-right metal-text-pink font-black" value="${ing.q}" onchange="window.updateIng(${receta.id}, ${idx}, 'q', this.value)"></td>
+                        <td class="w-12 text-center"><button class="admin-only text-red-400 hover:text-red-600 font-black text-lg" onclick="window.delIng(${receta.id}, ${idx})">×</button></td>
+                    </tr>`;
+                });
+                container.innerHTML += `
+                    <div class="recipe-box bg-slate-50 p-8 rounded-[2rem] border border-slate-200 shadow-sm relative mb-8">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b-2 border-[var(--oro)]/30 pb-4 mb-6 gap-4">
+                            <h3 class="playfair text-3xl text-slate-800 italic font-bold" contenteditable="true" onblur="window.updateRecetaNombre(${receta.id}, this.innerText)">${receta.nombre}</h3>
+                            <button class="admin-only text-[9px] font-black uppercase text-[var(--oro)] tracking-[2px] px-5 py-2.5 border-2 border-[var(--oro)] rounded-full hover:bg-[var(--oro)] hover:text-white transition-all" onclick="window.addIngRow(${receta.id})">+ Ingrediente</button>
+                        </div>
+                        <table class="table-insumos mb-6">
+                            <thead><tr><th>Ingrediente</th><th class="text-right">Cantidad Necesaria</th><th></th></tr></thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                        <div class="flex justify-end mt-4">
+                            <button class="admin-only px-5 py-2.5 bg-red-50 text-red-500 border border-red-200 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2" onclick="window.eliminarReceta(${receta.id})">
+                                🗑️ Eliminar Producto Completo
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            window.toggleEditables(window.isAdmin && !window.isViewingAsClient);
+        };
+
+        window.updateRecetaNombre = (id, val) => { window.pasteleriaRecetas.find(x => x.id === id).nombre = val; window.triggerAutoSave(); };
+        window.updateIng = (id, idx, f, v) => { window.pasteleriaRecetas.find(x => x.id === id).ingredientes[idx][f] = v; window.triggerAutoSave(); };
+        window.addIngRow = (id) => { window.pasteleriaRecetas.find(x => x.id === id).ingredientes.push({n:"",q:""}); window.renderPlantillaInsumos(); window.triggerAutoSave(); };
+        window.delIng = (id, idx) => { window.pasteleriaRecetas.find(x => x.id === id).ingredientes.splice(idx,1); window.renderPlantillaInsumos(); window.triggerAutoSave(); };
+        window.añadirReceta = () => { window.pasteleriaRecetas.push({id: Date.now(), nombre: "Nuevo Producto", ingredientes: [{n: "Ingrediente", q: "0g"}]}); window.renderPlantillaInsumos(); window.triggerAutoSave(); };
+        window.eliminarReceta = (id) => { if(confirm('¿Eliminar este producto y todos sus ingredientes de la lista?')){ window.pasteleriaRecetas = window.pasteleriaRecetas.filter(x => x.id !== id); window.renderPlantillaInsumos(); window.triggerAutoSave(); }};
+        
+        window.exportarExcel = function() {
+            let csv = "PASTEL,INGREDIENTE,CANTIDAD\n";
+            window.pasteleriaRecetas.forEach(r => r.ingredientes.forEach(i => { csv += `"${r.nombre}","${i.n}","${i.q}"\n`; }));
+            const a = document.createElement("a"); a.href = encodeURI("data:text/csv;charset=utf-8," + csv); a.download = "Produccion_AzucarFlores.csv"; a.click();
+        };
+
+        // --- LÓGICA DE ACCESO Y SEGURIDAD ---
         window.validarAcceso = function() {
-            const pin = document.getElementById('pin-input').value;
-            if (pin === ADMIN_PIN) { window.isAdmin = true; window.isViewingAsClient = false; document.body.classList.add('admin-mode'); window.entrar(); }
-            else if (pin === CLIENT_PIN) { window.isAdmin = false; window.isViewingAsClient = true; document.body.classList.remove('admin-mode'); window.entrar(); }
+            const p = document.getElementById('pin-input').value.trim();
+            if(p===ADMIN_PIN){ window.isAdmin=true; window.isViewingAsClient=false; document.body.classList.add('admin-mode-active'); window.entrar(); }
+            else if(p===CLIENT_PIN){ window.isAdmin=false; window.isViewingAsClient=true; document.body.classList.remove('admin-mode-active'); window.entrar(); }
             else { document.getElementById('login-error').classList.remove('hidden'); }
         };
 
         window.entrar = function() {
             document.getElementById('login-view').classList.add('hidden');
             document.getElementById('app-layout').classList.remove('hidden');
-            window.toggleEditables(window.isAdmin && !window.isViewingAsClient);
+            if(document.getElementById('module-list').children.length === 0){
+                document.getElementById('modules-container').innerHTML = initialBackup.modulesContainer;
+                document.getElementById('module-list').innerHTML = initialBackup.moduleList;
+                document.getElementById('carousel-track').innerHTML = initialBackup.carouselTrack;
+            }
             window.cambiarModulo(window.currentModuleId, true);
             window.inicializarCarrusel();
-            window.showToast(window.isAdmin ? "Administrador Activo" : "Bienvenido");
+            window.renderPlantillaInsumos();
         };
 
-        window.toggleAdminView = function() {
-            window.isViewingAsClient = !window.isViewingAsClient;
-            const btn = document.getElementById('btn-admin-view');
-            btn.innerText = window.isViewingAsClient ? "Volver a Editar" : "Ver Resultado";
-            window.toggleEditables(!window.isViewingAsClient);
+        window.toggleAdminView = function() { 
+            window.isViewingAsClient = !window.isViewingAsClient; 
+            window.cambiarModulo(window.currentModuleId, true); 
+            window.showToast(window.isViewingAsClient ? "Vista Cliente Activa" : "Modo Edición Activado"); 
+        };
+        
+        window.toggleEditables = function(s) { 
+            document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable', s)); 
+            if (window.isAdmin && !window.isViewingAsClient) {
+                document.body.classList.add('admin-mode-active');
+            } else {
+                document.body.classList.remove('admin-mode-active');
+            }
         };
 
-        window.toggleEditables = function(state) {
-            document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable', state));
-            document.querySelectorAll('.admin-only').forEach(el => {
-                if(window.isAdmin && !window.isViewingAsClient) el.classList.remove('hidden');
-                else el.classList.add('hidden');
-            });
-        };
-
-        window.cambiarModulo = function(id, skipMenu = false) {
+        // --- GESTIÓN DE MÓDULOS (SIDEBAR Y CONTENIDO) ---
+        window.cambiarModulo = function(id, skip = false) {
             window.currentModuleId = id;
             document.querySelectorAll('#module-list li').forEach(li => li.classList.remove('active'));
-            const activeLi = document.getElementById('nav-' + id);
-            if(activeLi) {
-                activeLi.classList.add('active');
-                document.getElementById('breadcrumb-active').innerText = activeLi.innerText.toUpperCase();
+            document.getElementById('nav-'+id)?.classList.add('active');
+            const bc = document.getElementById('breadcrumb-active'); 
+            if(bc) {
+                const titleEl = document.getElementById('nav-'+id)?.querySelector('.mod-title-edit');
+                bc.innerText = titleEl ? titleEl.innerText.toUpperCase() : id.replace('mod-','').toUpperCase();
             }
+            
+            // Ocultar Banner en áreas técnicas
+            const carousel = document.getElementById('carousel-section');
+            if(id==='mod-insumos' || id==='mod-guia') carousel?.classList.add('hidden');
+            else carousel?.classList.remove('hidden');
+
             document.querySelectorAll('.module-content-view').forEach(m => m.style.display = 'none');
-            if(document.getElementById(id)) document.getElementById(id).style.display = 'block';
-            if(!skipMenu && window.innerWidth < 1024) window.toggleSidebar(false);
+            const target = document.getElementById(id); if(target) target.style.display = 'block';
+            if(!skip && window.innerWidth < 1024) window.toggleSidebar(false);
+            window.toggleEditables(window.isAdmin && !window.isViewingAsClient);
         };
 
-        window.toggleSidebar = function(state) {
-            const side = document.getElementById('sidebar');
-            const over = document.getElementById('mobile-overlay');
-            if(state) { side.classList.remove('-translate-x-full'); over.classList.remove('hidden'); }
-            else { side.classList.add('-translate-x-full'); over.classList.add('hidden'); }
+        // CREAR MÓDULO (CON INPUT INLINE PARA EVITAR PROMPTS QUE SE TRABAN)
+        window.añadirModulo = function() {
+            const id = 'mod-' + Date.now();
+            const ul = document.getElementById('module-list');
+            const li = document.createElement('li'); li.id = 'nav-'+id; li.className = "btn-module"; 
+            li.innerHTML = `<span class="mod-title-edit" contenteditable="true" onblur="window.triggerAutoSave()">Nueva Sección</span><button class="admin-only btn-delete-mod" onclick="window.eliminarModulo('${id}', event)">×</button>`;
+            li.onclick = () => window.cambiarModulo(id);
+            ul.appendChild(li);
+            
+            const container = document.getElementById('modules-container');
+            const div = document.createElement('div'); div.id = id; div.className = 'module-content-view'; div.style.display = 'none';
+            div.innerHTML = `<h1 class="module-main-title metal-text-pink text-center italic text-5xl font-black mb-12" contenteditable="true" onblur="window.triggerAutoSave()">Título de la Sección</h1><div class="blocks-wrapper"></div>`;
+            container.appendChild(div);
+            window.cambiarModulo(id);
+            window.triggerAutoSave();
         };
 
-        window.agregarBloque = function(tipo) {
-            const wrapper = document.querySelector(`#${window.currentModuleId} .blocks-wrapper`);
-            if(!wrapper) return;
-            const block = document.createElement('div');
-            block.className = 'content-block';
-            let html = `<div class="block-controls admin-only"><button class="text-white" onclick="window.moverBloque(this, -1)">⬆️</button><button class="text-white" onclick="window.moverBloque(this, 1)">⬇️</button><button class="text-red-400 font-bold" onclick="this.closest('.content-block').remove(); window.triggerAutoSave();">X</button></div>`;
-            if(tipo==='texto') html += `<div class="p-8 text-content" contenteditable="true">Haz clic para editar texto...</div>`;
-            else if(tipo==='imagen') { const url = prompt("URL de la foto:"); if(!url) return; html += `<img src="${url}" class="w-full h-auto">`; }
-            else if(tipo==='whatsapp') {
-                html += `<div class="p-8 wa-product-block">
-                    <h2 class="wa-prod-name metal-text-pink text-3xl font-black mb-2" contenteditable="true">Nuevo Pastel</h2>
-                    <p class="wa-prod-desc text-slate-500 mb-6" contenteditable="true">Descripción del pastel.</p>
-                    <div class="flex items-center justify-between gap-4">
-                        <span class="wa-prod-price text-2xl font-black metal-text-gold" contenteditable="true">$0.00</span>
-                        <button class="btn-wa-premium flex-1" onclick="window.pedirWhatsApp(this)">Pedir por WhatsApp</button>
-                    </div>
-                </div>`;
+        window.eliminarModulo = (id, e) => { 
+            e.stopPropagation(); 
+            if(confirm('¿Eliminar esta sección por completo?')){ 
+                document.getElementById('nav-'+id)?.remove(); 
+                document.getElementById(id)?.remove(); 
+                window.cambiarModulo('mod-bienvenida'); 
+                window.triggerAutoSave(); 
             }
-            block.innerHTML = html;
-            wrapper.appendChild(block);
+        };
+
+        // --- CONSTRUCTOR BOUTIQUE ---
+        window.agregarBloque = function(t) {
+            const wrapper = document.querySelector(`#${window.currentModuleId} .blocks-wrapper`); if(!wrapper) return;
+            const b = document.createElement('div'); b.className = 'content-block';
+            let h = `<div class="admin-only absolute top-4 right-4 z-20 gap-2"><button class="bg-black/20 p-2 rounded text-white hover:bg-black/40 transition" onclick="window.moverB(this,-1)">⬆️</button><button class="bg-black/20 p-2 rounded text-white hover:bg-black/40 transition" onclick="window.moverB(this, 1)">⬇️</button><button class="bg-red-500/80 text-white p-2 rounded hover:bg-red-600 transition" onclick="this.closest('.content-block').remove(); window.triggerAutoSave();">❌</button></div>`;
+            
+            if(t==='texto') {
+                h += `<div class="p-14 text-content text-2xl italic text-center text-slate-700" contenteditable="true" onblur="window.triggerAutoSave()">Haz clic para escribir un nuevo párrafo...</div>`;
+            }
+            else if(t==='imagen') { 
+                h += `<div class="p-8">
+                        <input type="text" class="admin-only w-full p-3 mb-4 border-2 border-[var(--oro)]/30 rounded-xl text-sm outline-none focus:border-[var(--rosa)]" placeholder="Pega aquí la URL de la imagen..." onchange="this.nextElementSibling.src=this.value; window.triggerAutoSave();">
+                        <img src="https://placehold.co/800x400/FDFBF7/C8819E?text=A%C3%B1adir+Fotograf%C3%ADa" class="w-full rounded-2xl shadow-sm object-cover">
+                      </div>`;
+            }
+            else if(t==='video') { 
+                h += `<div class="p-8">
+                        <input type="text" class="admin-only w-full p-3 mb-4 border-2 border-[var(--oro)]/30 rounded-xl text-sm outline-none focus:border-[var(--rosa)]" placeholder="Pega el enlace Embed de YouTube (ej. https://www.youtube.com/embed/...)" onchange="this.nextElementSibling.querySelector('iframe').src=this.value; window.triggerAutoSave();">
+                        <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-sm bg-slate-100"><iframe src="" class="w-full h-full" frameborder="0" allowfullscreen></iframe></div>
+                      </div>`;
+            }
+            else if(t==='whatsapp') {
+                const waNumber = prompt("Ingresa el número de WhatsApp para pedidos (con código de país, ej. 5213311414110):", "5213311414110");
+                if(!waNumber) return; // Cancela si no se pone número
+                h += `<div class="p-14 text-center wa-product-block">
+                        <h2 class="wa-prod-name metal-text-pink text-4xl font-black mb-4" contenteditable="true" onblur="window.triggerAutoSave()">Nombre del Pastel</h2>
+                        <p class="wa-prod-desc text-slate-500 mb-8 italic text-lg" contenteditable="true" onblur="window.triggerAutoSave()">Descripción exquisita de los ingredientes.</p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 relative">
+                            <span class="wa-prod-price text-4xl font-black metal-text-gold" contenteditable="true" onblur="window.triggerAutoSave()">$0.00</span>
+                            <button class="btn-wa-premium mt-4 sm:mt-0 sm:!w-auto sm:px-16" data-wa="${waNumber}" onclick="window.pedirWA(this)">PEDIR POR WHATSAPP</button>
+                            <button class="admin-only absolute -bottom-8 text-[10px] font-bold text-slate-400 hover:text-[var(--rosa)] transition-colors" onclick="window.editarWA(this)">✏️ Editar Número WA</button>
+                        </div>
+                      </div>`;
+            }
+            
+            b.innerHTML = h; wrapper.appendChild(b); 
+            window.toggleEditables(window.isAdmin && !window.isViewingAsClient);
             window.triggerAutoSave();
         };
 
-        window.pedirWhatsApp = function(btn) {
-            const card = btn.closest('.wa-product-block') || btn.closest('.content-block');
-            const nombre = card.querySelector('.wa-prod-name').innerText;
-            const precio = card.querySelector('.wa-prod-price').innerText;
-            const msg = `¡Hola Azúcar Flores! 🌸 Me interesa pedir: *${nombre}* (${precio}). ¿Me dan informes?`;
-            window.open(`https://wa.me/5213311414110?text=${encodeURIComponent(msg)}`, '_blank');
+        window.moverB = (btn, d) => { const b = btn.closest('.content-block'); if(d===-1 && b.previousElementSibling) b.parentElement.insertBefore(b, b.previousElementSibling); else if(d===1 && b.nextElementSibling) b.parentElement.insertBefore(b.nextElementSibling, b); window.triggerAutoSave(); };
+        
+        window.pedirWA = (btn) => {
+            const card = btn.closest('.content-block') || btn.closest('.wa-product-block');
+            const n = card.querySelector('.wa-prod-name')?.innerText || "Pastel";
+            const p = card.querySelector('.wa-prod-price')?.innerText || "";
+            const wa = btn.getAttribute('data-wa') || "5213311414110";
+            window.open(`https://wa.me/${wa}?text=${encodeURIComponent("Hola Azúcar Flores! 🌸 Me interesa pedir: "+n+" ("+p+"). ¿Tienen disponibilidad?")}`, '_blank');
         };
 
-        window.moverBloque = function(btn, dir) {
-            const block = btn.closest('.content-block');
-            if(dir === -1 && block.previousElementSibling) block.parentElement.insertBefore(block, block.previousElementSibling);
-            else if(dir === 1 && block.nextElementSibling) block.parentElement.insertBefore(block.nextElementSibling, block);
-            window.triggerAutoSave();
+        window.editarWA = (btn) => {
+            const waBtn = btn.parentElement.querySelector('.btn-wa-premium');
+            const currentWa = waBtn.getAttribute('data-wa') || "5213311414110";
+            const newWa = prompt("Ingresa el nuevo número de WhatsApp (con código de país, ej. 5213311414110):", currentWa);
+            if(newWa) {
+                waBtn.setAttribute('data-wa', newWa.replace(/\D/g, ''));
+                window.triggerAutoSave();
+                window.showToast("Número de WhatsApp actualizado correctamente");
+            }
         };
 
-        window.inicializarCarrusel = function() {
-            const track = document.getElementById('carousel-track');
-            if(track.children.length === 0) track.innerHTML = initialBackup.carouselTrack;
-            window.actualizarVistaCarrusel();
-            if(window.intervaloCarrusel) clearInterval(window.intervaloCarrusel);
-            window.intervaloCarrusel = setInterval(() => window.moverCarrusel(1), 6000);
-        };
+        window.toggleSidebar = (s) => { const b = document.getElementById('sidebar'); if(s) b.classList.remove('-translate-x-full'); else b.classList.add('-translate-x-full'); };
+        window.copiarLink = () => { const i = document.createElement('input'); i.value = "https://plataforma-azucar-flores.vercel.app/"; document.body.appendChild(i); i.select(); document.execCommand('copy'); document.body.removeChild(i); window.showToast("Enlace de Plataforma Copiado"); };
+        window.showToast = (m) => { const t = document.getElementById('toast-msg'); t.innerText = m; t.style.display='block'; setTimeout(()=>t.style.display='none',3000); };
+        window.cerrarSesion = () => location.reload();
+        
+        // --- GUARDADO / CARGA ARCHIVOS JSON ---
+        window.guardarCodigo = () => { const d = { mc: document.getElementById('modules-container').innerHTML, ml: document.getElementById('module-list').innerHTML, ct: document.getElementById('carousel-track').innerHTML, rec: window.pasteleriaRecetas }; const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(d)], {type:"application/json"})); a.download = "AzucarFlores_Respaldo_Final.json"; a.click(); };
+        window.cargarRespaldo = (e) => { const f = e.target.files[0]; const r = new FileReader(); r.onload = (ev) => { const d = JSON.parse(ev.target.result); document.getElementById('modules-container').innerHTML = d.mc || d.modulesContainer; document.getElementById('module-list').innerHTML = d.ml || d.moduleList; document.getElementById('carousel-track').innerHTML = d.ct || d.carouselTrack; if(d.rec) window.pasteleriaRecetas = d.rec; window.cambiarModulo(window.currentModuleId,true); window.renderPlantillaInsumos(); window.showToast("Catálogo Restaurado Exitosamente"); }; r.readAsText(f); };
 
-        window.moverCarrusel = function(dir) {
-            const track = document.getElementById('carousel-track');
-            const total = track.children.length;
-            if(total === 0) return;
-            window.slideActual = (window.slideActual + dir + total) % total;
-            track.style.transform = `translateX(-${window.slideActual * 100}%)`;
-            window.actualizarVistaCarrusel();
-        };
-
+        // --- GESTIÓN DE BANNERS CONTINUOS ---
         window.actualizarVistaCarrusel = function() {
             const dots = document.getElementById('carousel-dots');
+            if(!dots) return;
             dots.innerHTML = '';
-            for(let i=0; i<document.getElementById('carousel-track').children.length; i++) {
+            const track = document.getElementById('carousel-track');
+            if(!track) return;
+            for(let i=0; i<track.children.length; i++) {
                 const d = document.createElement('div');
                 d.className = `dot ${i === window.slideActual ? 'active' : ''}`;
+                d.onclick = () => { 
+                    window.slideActual = i; 
+                    track.style.transform = `translateX(-${i * 100}%)`; 
+                    window.actualizarVistaCarrusel(); 
+                    window.triggerAutoSave();
+                };
                 dots.appendChild(d);
             }
         };
 
-        async function initFirebase() {
-            try {
-                // USAMOS TUS LLAVES FIREBASE (AZUCAR FLORES)
-                const firebaseConfig = {
-                    apiKey: "AIzaSyArmyn37sfNsY93oQU2F1c9imOxizt_gjk",
-                    authDomain: "manual-vemsi.firebaseapp.com",
-                    projectId: "manual-vemsi",
-                    storageBucket: "manual-vemsi.firebasestorage.app",
-                    messagingSenderId: "782991816702",
-                    appId: "1:782991816702:web:65656fee4b385bd0d232af"
-                };
-
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                appId = "azucar-flores-web-oficial";
-
-                await signInAnonymously(auth);
-                
-                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main'), (snap) => {
-                    if(snap.exists() && !window.isAdmin) {
-                        const data = snap.data();
-                        document.getElementById('modules-container').innerHTML = data.modulesContainer;
-                        document.getElementById('module-list').innerHTML = data.moduleList;
-                        document.getElementById('carousel-track').innerHTML = data.carouselTrack;
-                        window.cambiarModulo(window.currentModuleId, true);
-                        window.actualizarVistaCarrusel();
-                    }
-                });
-            } catch (e) {
-                document.getElementById('modules-container').innerHTML = initialBackup.modulesContainer;
-                document.getElementById('module-list').innerHTML = initialBackup.moduleList;
-                window.cambiarModulo(window.currentModuleId, true);
-            }
-        }
-
-        let autoSaveTimer;
-        window.triggerAutoSave = function() {
-            if(!window.isAdmin || window.isViewingAsClient) return;
-            const ind = document.getElementById('cloud-indicator');
-            ind.innerHTML = "GUARDANDO...";
-            ind.classList.remove('hidden');
-            
-            clearTimeout(autoSaveTimer);
-            autoSaveTimer = setTimeout(async () => {
-                const data = {
-                    modulesContainer: document.getElementById('modules-container').innerHTML,
-                    moduleList: document.getElementById('module-list').innerHTML,
-                    carouselTrack: document.getElementById('carousel-track').innerHTML,
-                    updatedAt: new Date().toISOString()
-                };
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main'), data);
-                ind.innerHTML = "NUBE ACTIVA";
-                setTimeout(() => ind.classList.add('hidden'), 2000);
-            }, 2000);
+        window.inicializarCarrusel = function() {
+            window.actualizarVistaCarrusel();
+            if(window.intervaloCarrusel) clearInterval(window.intervaloCarrusel);
+            window.intervaloCarrusel = setInterval(() => {
+                const track = document.getElementById('carousel-track');
+                const total = track?.children.length || 0;
+                if(total > 1) { 
+                    window.slideActual = (window.slideActual + 1) % total; 
+                    track.style.transform = `translateX(-${window.slideActual * 100}%)`; 
+                    window.actualizarVistaCarrusel();
+                }
+            }, 6000);
         };
 
-        document.addEventListener('input', () => window.triggerAutoSave());
-        window.showToast = function(m) { const t = document.getElementById('toast-msg'); t.innerText = m; t.style.display='block'; setTimeout(()=>t.style.display='none', 3000); };
-        window.copiarLink = function() { const url = "https://plataforma-azucar-flores.vercel.app/"; const i = document.createElement('input'); i.value = url; document.body.appendChild(i); i.select(); document.execCommand('copy'); document.body.removeChild(i); window.showToast("Enlace copiado"); };
-        window.cerrarSesion = function() { location.reload(); };
+        window.agregarBannerCarrusel = function() {
+            const track = document.getElementById('carousel-track');
+            const div = document.createElement('div'); div.className = "carousel-slide min-w-full h-full relative flex items-center justify-center group";
+            div.innerHTML = `
+                <input type="text" class="admin-only absolute top-4 left-4 w-1/2 p-3 z-30 text-black text-xs rounded-xl shadow-lg border-2 border-[var(--oro)]" placeholder="Pega URL de imagen aquí..." onchange="this.nextElementSibling.src=this.value; window.triggerAutoSave();">
+                <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200" class="w-full h-full object-cover opacity-60">
+                <div class="slide-overlay"><h2 class="playfair metal-text-gold text-4xl mb-2" contenteditable="true" onblur="window.triggerAutoSave()">Nuevo Banner</h2><p class="text-slate-100 font-bold text-lg" contenteditable="true" onblur="window.triggerAutoSave()">Descripción.</p></div>`;
+            track.appendChild(div); 
+            window.actualizarVistaCarrusel();
+            window.toggleEditables(window.isAdmin && !window.isViewingAsClient);
+            window.triggerAutoSave();
+        };
 
-        initFirebase();
+        window.eliminarBannerActual = function() {
+            const track = document.getElementById('carousel-track');
+            if(track.children.length > 1) { track.children[window.slideActual].remove(); window.slideActual = 0; track.style.transform = "translateX(0)"; window.actualizarVistaCarrusel(); window.triggerAutoSave(); }
+            else { alert("Debe quedar al menos 1 banner."); }
+        };
+
+        // --- FIREBASE (NUBE) ---
+        let autoSaveTimer;
+        window.triggerAutoSave = () => {
+            if(!window.isAdmin || window.isViewingAsClient) return;
+            const ind = document.getElementById('cloud-indicator'); ind.style.display = 'flex';
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(async () => {
+                const d = { mc: document.getElementById('modules-container').innerHTML, ml: document.getElementById('module-list').innerHTML, ct: document.getElementById('carousel-track').innerHTML, rec: window.pasteleriaRecetas, updatedAt: new Date().toISOString() };
+                if(db) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main'), d);
+                setTimeout(() => ind.style.display = 'none', 1500);
+            }, 2500);
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const firebaseConfig = { 
+                apiKey: "AIzaSyBJL1LxhTQLN1tiukW8eydErw3RssaegAA", 
+                authDomain: "azucar-flores.firebaseapp.com", 
+                projectId: "azucar-flores", 
+                storageBucket: "azucar-flores.firebasestorage.app", 
+                messagingSenderId: "449617416475", 
+                appId: "1:449617416475:web:bcd0c04a4bf6c15afb83be" 
+            };
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app); auth = getAuth(app); appId = "azucar-flores-produccion";
+            
+            try {
+                await signInAnonymously(auth);
+                
+                // Recuperar datos al cargar para mantener todo sincronizado en la nube
+                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'catalogo', 'main'), (snap) => {
+                    if(snap.exists()) {
+                        const d = snap.data();
+                        // Solo actualizamos la vista si acabamos de cargar la página o estamos en modo cliente
+                        if(!window.isAdmin || window.isViewingAsClient) {
+                            if(d.mc) document.getElementById('modules-container').innerHTML = d.mc;
+                            if(d.ml) document.getElementById('module-list').innerHTML = d.ml;
+                            if(d.ct) document.getElementById('carousel-track').innerHTML = d.ct;
+                            if(d.rec) window.pasteleriaRecetas = d.rec;
+                            window.renderPlantillaInsumos();
+                            window.actualizarVistaCarrusel();
+                        }
+                    }
+                });
+            } catch(e) {
+                console.error("Firebase Auth Error:", e);
+                if(e.code === 'auth/configuration-not-found') {
+                    // Si el inicio de sesión anónimo no está habilitado, avisamos amigablemente.
+                    setTimeout(() => window.showToast("⚠️ Falta habilitar el acceso 'Anónimo' en la consola de Firebase."), 2000);
+                }
+            }
+        });
     </script>
 </body>
 </html>
