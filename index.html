@@ -19,7 +19,11 @@
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Lato', sans-serif; }
-        body { background-color: var(--bg-crema); color: #2A2522; overflow-x: hidden; }
+        
+        /* Fondo por defecto oscuro para evitar parpadeos o espacios blancos en el login */
+        body { background-color: #0C0B0A; color: #2A2522; overflow-x: hidden; transition: background-color 0.5s ease; }
+        body.logged-in { background-color: var(--bg-crema); }
+        
         h1, h2, h3, .playfair { font-family: 'Playfair Display', serif; letter-spacing: 0.5px; }
 
         .metal-text-gold { background: var(--metal-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: var(--oro); }
@@ -110,10 +114,10 @@
 <body class="client-mode notranslate">
 
     <!-- LOGIN BOUTIQUE -->
-    <div id="login-view" class="fixed inset-0 w-full h-screen z-[100] flex items-center justify-center bg-[#0C0B0A] px-4 overflow-hidden">
+    <div id="login-view" class="fixed inset-0 w-full h-[100dvh] min-h-screen z-[100] flex items-center justify-center bg-[#0C0B0A] px-4 overflow-hidden">
         <!-- Destellos sutiles de fondo -->
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#C8819E]/10 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#C5A059]/10 rounded-full blur-[120px]"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#C8819E]/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#C5A059]/10 rounded-full blur-[120px] pointer-events-none"></div>
         
         <div class="bg-[#161413] p-8 sm:p-12 rounded-[2.5rem] shadow-2xl w-full max-w-sm text-center relative z-10 border border-[#C5A059]/10">
             <!-- Línea superior metálica (Rosa a Oro) -->
@@ -413,8 +417,8 @@
         // --- LÓGICA DE ACCESO Y SEGURIDAD ---
         window.validarAcceso = function() {
             const p = document.getElementById('pin-input').value.trim();
-            if(p===ADMIN_PIN){ window.isAdmin=true; window.isViewingAsClient=false; document.body.classList.add('admin-mode-active'); window.entrar(); }
-            else if(p===CLIENT_PIN){ window.isAdmin=false; window.isViewingAsClient=true; document.body.classList.remove('admin-mode-active'); window.entrar(); }
+            if(p===ADMIN_PIN){ window.isAdmin=true; window.isViewingAsClient=false; document.body.classList.add('admin-mode-active'); document.body.classList.add('logged-in'); window.entrar(); }
+            else if(p===CLIENT_PIN){ window.isAdmin=false; window.isViewingAsClient=true; document.body.classList.remove('admin-mode-active'); document.body.classList.add('logged-in'); window.entrar(); }
             else { document.getElementById('login-error').classList.remove('hidden'); }
         };
 
